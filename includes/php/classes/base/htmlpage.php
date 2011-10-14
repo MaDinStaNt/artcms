@@ -156,46 +156,40 @@ class CHTMLPage extends CObject {
 	
 	function output_page(){
 		$this->draw_header();
-		$this->get_body();
+		$this->get_content();
 		$this->draw_footer();
 		$this->DebugInfo->OutPut();
 	}
 	
-	function get_body(){
-		$tv = $this->tv;
-		$template = $this->template;
-		function body_template($tv, $template){
-			foreach ($tv as $key => $value){ ${$key} = $value; }
-			if(file_exists(CUSTOM_TEMPLATE_PATH.$template))
-				require(CUSTOM_TEMPLATE_PATH. $template);
-			else
-				system_die('Invalid template '.$template);
-		}
-		body_template($this->tv, $template);
+	function get_content(){
+		$this->process_template($this->tv, CUSTOM_TEMPLATE_PATH.$this->template);
 	}
 	
 	function draw_header(){
 		if($this->no_html) return true;
-		$tv = $this->tv;
-		$template = $this->template;
-		function head_template($tv, $template, $header, $body){
-			foreach ($tv as $key => $value){ ${$key} = $value; }
-			require_once(BASE_TEMPLATE_PATH.$header);
-			require_once(BASE_TEMPLATE_PATH.$body);
-		}
-		head_template($this->tv, $template, $this->h_header, $this->h_body);
+		$this->process_template($this->tv, array(BASE_TEMPLATE_PATH.$this->h_header, BASE_TEMPLATE_PATH.$this->h_body));
 	}
 	
 	function draw_footer(){
 		if($this->no_html) return true;
-		$tv = $this->tv;
-		$template = $this->template;
-		function foot_template($tv, $template, $footer){
-			foreach ($tv as $key => $value){ ${$key} = $value; }
-			require_once(BASE_TEMPLATE_PATH.$footer);
-		}
-		foot_template($this->tv, $template, $this->h_footer);
-		
+		$this->process_template($this->tv, BASE_TEMPLATE_PATH.$this->h_footer);		
+	}
+	
+	function process_template($tv, $template){
+		foreach ($tv as $key => $value){ ${$key} = $value; }
+		if(is_array($template))
+			foreach ($template as $temp)
+				if(file_exists($temp)){
+					require_once($temp);
+				}
+				else
+					system_die("Page Invalid template path {$temp}");
+		else 
+			if(file_exists($template)){
+				require_once($template);
+			}
+			else
+				system_die("Page Invalid template path {$template}");
 	}
 	
 	function _handle_forms()
