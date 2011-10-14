@@ -1,0 +1,14 @@
+#wrapper .custom-select{display:inline;}
+.inpwrapper{display:inline;margin-right:3px;}
+.finpwrapper{display:inline;}
+.separator{display:inline;}
+#body .head .row a{display:inline;}
+#container .filter .cont .label{display:inline;}
+#container .filter .radio-cont{display:inline;}
+.top_buttons, .bottom_buttons, .buttons, {overflow:hidden;}
+.butt{font-size:1.1em;}
+.fbutt{font-size:1em;padding:0 15px;}
+#footer{position:static;}
+.paddb7{padding-bottom:7px !important;}
+.nav_body{border: #b8b8b8 1px solid;padding:1px;}
+.nav_t{border:none;padding:0;}
