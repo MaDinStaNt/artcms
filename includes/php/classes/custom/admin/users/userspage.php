@@ -118,7 +118,7 @@ class CUsersPage extends CMasterPage
         $query = "SELECT id, title, position FROM position";
         
         $nav = new DBNavigator('pos', $query, array(), 'position');
-        
+        $nav->_table = 'position';
         $header_num = $nav->add_header($this->Application->Localizer->get_string('title'), 'title');
         $nav->headers[$header_num]->no_escape = true;
         $nav->headers[$header_num]->align = "center";
@@ -130,9 +130,14 @@ class CUsersPage extends CMasterPage
         $nav->headers[$header_num]->set_wrap();
         $nav->headers[$header_num]->set_width('5%');
         $nav->headers[$header_num]->set_position();
-        CInput::set_select_data('parent_id_dbposition', array(1 => 'first parent', 2 => 'second parent', 3 => 'third parent'));
-        CInput::set_select_data('category_id_dbposition', array(1 => 'first category', 2 => 'second category', 3 => 'third category'));
-        $nav->swapPosition("SELECT id, title, parent_id, category_id, position FROM position", array('parent_id' => 'Parent', 'category_id' => 'Category'));
+        /*$parent_arr = array( '' => RECORDSET_FIRST_ITEM, 1 => 'first parent', 2 => 'second parent', 3 => 'third parent');
+        $category_arr = array( '' => RECORDSET_FIRST_ITEM, 1 => 'first category', 2 => 'second category', 3 => 'third category');
+        $nav->swapPosition("SELECT id, title, parent_id, category_id, position, pos_category FROM position",
+        	array('parent_id' => 'Parent', 'category_id' => 'Category'), 
+        	array('parent_id' => $parent_arr, 'category_id' => $category_arr), 
+        	array('parent_id' => 'position', 'category_id' => 'pos_category')
+        );*/
+        $nav->swapPosition("SELECT id, title, parent_id, category_id, position, pos_category FROM position");
         
         
         //print_arr($GLOBALS['control_tv']);

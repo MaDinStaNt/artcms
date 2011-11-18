@@ -27,10 +27,7 @@
 		$( '.popup-open' ).click(function(){
 			$('.popupbg').fadeIn(299);
 			if($(this).hasClass('popup-swappos'))
-			{
-				var dbnavigator_id = $(this).attr('dbnavigator');
-				$('#'+ dbnavigator_id +'_dbposition').fadeIn(300);
-			}
+				$('#'+ $(this).attr('dbnavigator') +'_dbposition').fadeIn(300);
 			return false;
 		});
 		$( '.popup a.close' ).click(function(){

@@ -158,15 +158,28 @@ class DBNavigator extends CControl
 		return $this->headers[$name];
 	}
 	
-	function swapPosition($query, $filter_arr = array(), $position_field = 'position', $mode = 'ASC', $id_field = 'id', $text_field = 'title')
+	/*
+		- query: sql string without WHERE, ORDER and GROUP functions
+		- filter_arr: array( condition_field => text (for label) )
+		- filter_val: array( condition_field => array or recordset for select )
+		- position_fields: array( condition_field => position_field ) or position field
+	*/
+	
+	function swapPosition($query, $filter_arr = array(), $filter_val = array(), $position_fields = 'position', $mode = 'ASC', $id_field = 'id', $text_field = 'title')
 	{
 		if($mode !== 'ASC' && $mode !== 'DESC')
 			$mode = 'ASC';
+			
+		if(!empty($filter_val))
+			foreach ($filter_val as $name => $values)
+				CInput::set_select_data($name, $values);
 		
+		$position_field = ((is_array($position_fields) && !empty($position_fields)) ? current($position_fields) : $position_fields);
 		$position_rs = $this->Application->DataBase->select_custom_sql($query. " ORDER by {$position_field} {$mode}");
 		if($position_rs !== false && !$position_rs->eof())
 		{
 			$filters = $this->tv['dbposition_filters'] = ((is_array($filter_arr) && !empty($filter_arr)) ? $filter_arr : false);
+			$this->tv['dbposition_pos_fields'] = $position_fields;
 			$this->tv['dbposition_show'] = true;
 			$tv_p = &$this->tv['dbposition'];
 			$this->tv['dbposition_id_field'] = $id_field;
@@ -174,7 +187,11 @@ class DBNavigator extends CControl
 			{
 				$tv_p[$position_rs->current_row]['id'] = $position_rs->get_field($id_field);
 				$tv_p[$position_rs->current_row]['text'] = $position_rs->get_field($text_field);
-				$tv_p[$position_rs->current_row]['position'] = $position_rs->get_field($position_field);
+				if(is_array($position_fields))
+					foreach ($position_fields as $cond_field => $pos_field)
+						$tv_p[$position_rs->current_row][$pos_field] = $position_rs->get_field($pos_field);
+				else 
+					$tv_p[$position_rs->current_row][$position_field] = $position_rs->get_field($position_field);
 				if($filters)
 					foreach ($filters as $field => $text)
 						$tv_p[$position_rs->current_row][$field] = $position_rs->get_field($field);

@@ -8,10 +8,17 @@ function gotoURL(url){
 		}
 	} else document.location = url;
 }
-$.fn.swapPosition = function(table, id_field, pos_field, type) {
+function is_array(obj) {
+   if (obj.constructor.toString().indexOf("Array") == -1)
+      return false;
+   else
+      return true;
+}
+$.fn.swapPosition = function(table, id_field, pos_fields, cond_fields, type) {
 	if(!table) return false;
     var id_field = id_field || "id";
-    var pos_field = pos_field || "position";
+    var pos_fields = pos_fields || "position";
+    var cond_fields = cond_fields || false;
     var type = type || "fx";
     return this.queue(type, function() {
 		var object_id = $(this).attr('id');
@@ -31,19 +38,36 @@ $.fn.swapPosition = function(table, id_field, pos_field, type) {
 		var max_position = 0;
 		var max_index = 0;
 		var field_cond = false;
+		if(is_array(cond_fields))
+			field_cond = cond_fields[0];
+			
+		if(is_array(pos_fields))
+			var pos_field = pos_fields[0];
+		else
+			var pos_field = pos_fields;
 		
 		if(body.height() > 510)
 			body.addClass('scroll');
 			
 		//check and bind select
-		if(select.length > 0)
+		if(field_cond !== false)
 		{
 			have_sort = true;
-			position_list = body.children('div.row['+ select.attr('name') +'='+ select.val() +']');
-			field_cond = select.attr('name');
+			var active_select = $('#'+ object_id + ' .sortable_select[name='+ field_cond +']');
+			position_list = body.children('div.row['+ field_cond +'='+ active_select.val() +']');
+			
 			select.change(function(){
+				if(field_cond !== $(this).attr('name'))
+				{
+					active_select.val('');
+					active_select = $(this);
+				}
+				field_cond = $(this).attr('name');
 				body.children('div.row').removeClass('showed filtered');
-				position_list = body.children('div.row['+ $(this).attr('name') +'='+ $(this).val() +']');
+				k = cond_fields.indexOf(field_cond);
+				pos_field = pos_fields[k];
+				cond_val = $(this).val();
+				position_list = body.children('div.row['+ field_cond +'='+ cond_val +']');
 				max_position = position_list.length;
 				max_index = max_position - 1;
 				if(max_position < 2){
@@ -60,6 +84,13 @@ $.fn.swapPosition = function(table, id_field, pos_field, type) {
 				inp_end.val(max_position);
 				position_list.addClass('showed filtered').eq(0).addClass('first');
 				$(position_list).eq(max_index).addClass('last');
+				position_list.each(function(){
+					var position = $(this).attr(pos_field);
+					var index = $(this).index('#'+ object_id +' div.filtered');
+					$(this).find('div.control input.inp').val(position);
+					if(max_position > 1 && (index + 1) != position)
+						body.children('div.row.filtered').eq(position - 1).before($(this));
+				});
 				butt_filter.click();
 			});
 		}
@@ -228,15 +259,21 @@ $.fn.swapPosition = function(table, id_field, pos_field, type) {
 				var swap_row = pos_list.eq(pos_inp - 1);
 				if( pos !== pos_inp && pos_inp >= 1 && pos_inp <= max_position )
 				{
-					if( pos > pos_inp )
-						swap_row.before( row );
+					if( (index + 1) == pos )
+					{
+						if( pos > pos_inp )
+							swap_row.before( row );
+						else
+							swap_row.after( row );
+						call('Inputs', 'move_into_pos', [table, row.attr(id_field), swap_row.attr(pos_field), id_field, pos_field, field_cond, row.attr(field_cond)]);
+					}
 					else
-						swap_row.after( row );
-					call('Inputs', 'move_into_pos', [table, row.attr(id_field), swap_row.attr(pos_field), id_field, pos_field, field_cond, row.attr(field_cond)]);
+					{
+						call('Inputs', 'rebuild_positions', [table, id_field, pos_field, field_cond]);
+					}
 				}
 				else
 				{
-					call('Inputs', 'rebuild_positions', [table, id_field, pos_field, field_cond]);
 					$(this).val(pos);
 					return false;
 				}

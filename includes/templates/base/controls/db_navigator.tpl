@@ -137,7 +137,22 @@
 <? if($dbposition_show): ?>
 	<script type="text/javascript">
 	$(function(){
-		$('#<? echo $object_id; ?>_dbsortable').swapPosition('position');
+		<? if(is_array($dbposition_pos_fields)): ?>
+			$('#<? echo $object_id; ?>_dbsortable').swapPosition('<? echo $_table; ?>', '<? echo $dbposition_id_field; ?>', 
+				[
+					<? foreach ($dbposition_pos_fields as $cond_field => $pos_field): ?>
+						"<? echo $pos_field; ?>",
+					<? endforeach; ?>
+				],
+				[
+					<? foreach ($dbposition_pos_fields as $cond_field => $pos_field): ?>
+						"<? echo $cond_field; ?>",
+					<? endforeach; ?>
+				]
+			);
+		<? else: ?>
+			$('#<? echo $object_id; ?>_dbsortable').swapPosition('<? echo $_table; ?>', '<? echo $dbposition_id_field; ?>', '<? echo $dbposition_pos_field; ?>');
+		<? endif; ?>
 	});
 	</script>
 	<div id="<? echo $object_id; ?>_dbposition" class="popupblock">
@@ -151,7 +166,7 @@
 							<? foreach ($dbposition_filters as $field => $text): ?>
 								<div class="field">
 									<label for="<? echo $field; ?>_dbposition"><? echo $text; ?></label>
-									<? CTemplate::input('select', "{$field}_dbposition", "{$field}_dbposition", 'sel sortable_select'); ?>
+									<? CTemplate::input('select', "{$field}_dbposition", "{$field}", 'sel sortable_select'); ?>
 								</div>
 							<? endforeach; ?>
 						<? endif; ?>
@@ -171,11 +186,18 @@
 					
 					<div id="<? echo $object_id; ?>sortable_body" class="body sortable_body">
 						<? foreach ($dbposition as $object): ?>
-							<div class="row" <? echo $dbposition_id_field; ?>="<? echo $object['id']; ?>" position="<? echo $object['position']; ?>" 
+							<div class="row" <? echo $dbposition_id_field; ?>="<? echo $object['id']; ?>"
 									<? if($dbposition_filters): ?>
 										<? foreach ($dbposition_filters as $field => $text): ?>
-											<? echo $field; ?>_dbposition="<? echo $object[$field]; ?>"
+											<? echo $field; ?>="<? echo $object[$field]; ?>"
 										<? endforeach; ?>
+									<? endif; ?>
+									<? if(is_array($dbposition_pos_fields)): ?>
+										<? foreach ($dbposition_pos_fields as $cond_field => $pos_field): ?>
+											<? echo $pos_field; ?>="<? echo $object[$pos_field]; ?>"
+										<? endforeach; ?>
+									<? else: ?>
+										<? echo $dbposition_pos_fields; ?>="<? echo $object[$dbposition_pos_fields]; ?>"
 									<? endif; ?>
 								>
 								<div class="txt"><? echo $object['text']; ?></div>

@@ -197,7 +197,7 @@ class CForm{
 
 class CInput{
 	
-	function set_select_data($name, $arr, $id='', $text='', &$tv = null)
+	function set_select_data($name, $arr, $id='id', $text='title', &$tv = null)
 	{
 		global $app;
 		if(is_null($tv)) $tv = &$app->tv;
