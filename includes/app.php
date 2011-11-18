@@ -36,6 +36,13 @@ class CApp extends CApplication
             'Visual'=>'0',
             'Title' => 'Images'
         );
+        $this->Modules['Inputs'] = array(
+			'ClassName' => 'CInputs',
+            'ClassPath' => CUSTOM_CLASSES_PATH . 'components/inputs.php',
+            'Visual'=>'0',
+            'AjaxVisible' => true,
+            'Title' => 'Inputs'
+        );
         
         
    	}

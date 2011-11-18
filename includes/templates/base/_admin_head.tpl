@@ -23,5 +23,22 @@
 			$(this).datepicker("setDate" , date);
 		});
 		$( ".inpDate" ).datepicker("option", "dateFormat", 'yy-mm-dd');
+		
+		$( '.popup-open' ).click(function(){
+			$('.popupbg').fadeIn(299);
+			if($(this).hasClass('popup-swappos'))
+			{
+				var dbnavigator_id = $(this).attr('dbnavigator');
+				$('#'+ dbnavigator_id +'_dbposition').fadeIn(300);
+			}
+			return false;
+		});
+		$( '.popup a.close' ).click(function(){
+			$('.popupblock').fadeOut(300);
+			$('.popupbg').fadeOut(300);
+			if($(this).hasClass('popup-swappos'))
+				document.location = "";
+			return false;
+		});
 	});
 	</script>

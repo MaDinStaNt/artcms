@@ -98,16 +98,9 @@ if (strcasecmp(get_class($row), 'CRecordSet')==0) foreach ($row->Fields as $v) $
 if (strcasecmp(get_class($row), 'CRecordSetRow')==0) foreach ($row->Fields as $k => $v) $tv[$prefix.$k] = $v;
 }
 // set variables in template_vars ($tv) to values from CRecordSet
-function recordset_to_vars(&$rs, &$tv, $counter_varname, $prefix='', $ovewrite_tv = true){
-if ($rs === false) {$tv[$counter_varname] = 0;return false;}
-if ( ($ovewrite_tv) || (!isset($tv[$counter_varname])) ) $tv[$counter_varname] = 0;
-$tv[$counter_varname] += $rs->get_record_count();
-$rs->first();
-foreach ($rs->Fields as $v) if ( ($ovewrite_tv) || ((isset($tv[$prefix.$v])) && (!is_array($tv[$prefix.$v]))) ) $tv[$prefix.$v] = array();
-while (!$rs->eof()) {
-	foreach ($rs->Fields as $v) $tv[$prefix.$v][] = $rs->get_field($v);
-	$rs->next();
-}
+function recordset_to_vars(&$rs, &$tv){
+if ($rs === false) {$tv = array();return false;}
+$tv = $rs->get_2darray();
 }
 function recordset_to_vars_callback(&$rs, &$tv, $counter_varname, $cb = '', $prefix='', $data=null, $ovewrite_tv = true){
 if ( $rs === false ) {$tv[$counter_varname]=0;return false;}

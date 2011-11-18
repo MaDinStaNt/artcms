@@ -15,4 +15,7 @@
 	<? endif; ?>
 	<div class="inpwrapper"><? CTemplate::button('add_bot', 'add', CTemplate::get_loc_string('add'), 'butt'); ?></div>
 </div>
+
+<? CControl::process('DBNavigator', 'pos'); ?>
+
 <? CForm::end(); ?>

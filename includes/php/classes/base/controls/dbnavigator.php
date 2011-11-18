@@ -16,6 +16,7 @@ class DBNavigator extends CControl
 	public $row_clickaction;
 	public $size;
 	public $cache;
+	public $cnt_query = false;
 
 	function DBNavigator($object_id, $query, $sort_vars = array(), $default_sort_key = null, $default_sort_mode = 'ASC')
 	{
@@ -26,7 +27,13 @@ class DBNavigator extends CControl
 		$this->row_clickaction = &$this->tv['row_clickaction'];
 		$this->total_items = &$this->tv['total_items'];
 		$this->headers = array();
-		$this->query = $query;
+		if(is_array($this->query))
+		{
+			$this->query = $this->query[0];
+			$this->cnt_query = $this->query[1];
+		}
+		else
+			$this->query = $query;
 		$this->sort_vars = $sort_vars;
 		$this->default_sort_key = $default_sort_key;
 		$this->default_sort_mode = $default_sort_mode; 
@@ -75,7 +82,7 @@ class DBNavigator extends CControl
 		$this->tv['row_numb_before'] = $row_numb_before;
 		
 		$rs = $this->Application->DataBase->select_custom_sql($this->query . $order . $limit);
-		$cnt_rs = $this->Application->DataBase->select_custom_sql($this->query);
+		$cnt_rs = $this->Application->DataBase->select_custom_sql(((!$this->cnt_query) ? $this->query : $this->cnt_query));
 		if($rs == false || $rs->eof() || $cnt_rs == false || $cnt_rs->eof())
 		{
 			$_SESSION['cache']['AdminBreadcrumb'] = array();
@@ -89,7 +96,7 @@ class DBNavigator extends CControl
 			}
 		}
 		
-		$this->total_items = $cnt_rs->get_record_count();
+		$this->total_items = ((!$this->cnt_query) ? $cnt_rs->get_record_count() : $cnt_rs->get_field('cnt'));
 		$cnt_page = ceil($this->total_items / DBNAV_PAGE_SIZE);
 		if($numb_page == $cnt_page) $this->tv['row_numb_end'] = $this->total_items;
 		else $this->tv['row_numb_end'] = DBNAV_PAGE_SIZE * $numb_page;
@@ -125,6 +132,7 @@ class DBNavigator extends CControl
 			$rs->next();
 		}
 		
+		$this->tv['dbposition_show'] = false;
 		if($is_checkable) $this->add_header('id');
 		else $this->add_header('num');
 		
@@ -148,6 +156,34 @@ class DBNavigator extends CControl
 
 	function &get_header($name){
 		return $this->headers[$name];
+	}
+	
+	function swapPosition($query, $filter_arr = array(), $position_field = 'position', $mode = 'ASC', $id_field = 'id', $text_field = 'title')
+	{
+		if($mode !== 'ASC' && $mode !== 'DESC')
+			$mode = 'ASC';
+		
+		$position_rs = $this->Application->DataBase->select_custom_sql($query. " ORDER by {$position_field} {$mode}");
+		if($position_rs !== false && !$position_rs->eof())
+		{
+			$filters = $this->tv['dbposition_filters'] = ((is_array($filter_arr) && !empty($filter_arr)) ? $filter_arr : false);
+			$this->tv['dbposition_show'] = true;
+			$tv_p = &$this->tv['dbposition'];
+			$this->tv['dbposition_id_field'] = $id_field;
+			while (!$position_rs->eof())
+			{
+				$tv_p[$position_rs->current_row]['id'] = $position_rs->get_field($id_field);
+				$tv_p[$position_rs->current_row]['text'] = $position_rs->get_field($text_field);
+				$tv_p[$position_rs->current_row]['position'] = $position_rs->get_field($position_field);
+				if($filters)
+					foreach ($filters as $field => $text)
+						$tv_p[$position_rs->current_row][$field] = $position_rs->get_field($field);
+						
+				$position_rs->next();
+			}
+		}
+		else 
+			$this->tv['dbposition_show'] = false;
 	}
 
 }
@@ -232,6 +268,12 @@ class DBNavigatorHeader{
 	function set_title($str){
 		if(!strval($str)) system_die('Invalid title', 'Header_link->set_title');
 		$this->tv['title'] = $str;
+	}
+	
+	function set_position()
+	{
+		$this->tv['swapPosition'] = true;
+		$this->tv['clickable'] = false;
 	}
 }
 ?>

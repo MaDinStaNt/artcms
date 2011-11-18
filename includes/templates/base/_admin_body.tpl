@@ -1,6 +1,7 @@
 <?if ($is_logged && !$is_404page):?>
 	</head>
 	<body>
+	<div class="popupbg">&nbsp;</div>
 	<div id="wrapper">
 		<table cellpadding="0" cellspacing="0" class="overhidd maxh maxw" style="padding-bottom:30px;">
 		<tbody><tr>

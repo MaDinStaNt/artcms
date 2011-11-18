@@ -115,46 +115,27 @@ class CUsersPage extends CMasterPage
         	$this->tv['remove_btn_show'] = false;
         
         //print_arr($GLOBALS['control_tv']);
+        $query = "SELECT id, title, position FROM position";
         
-        /*require_once(BASE_CLASSES_PATH . 'controls/navigator.php'); // base application class
-        $nav = new Navigator('users', $query, array('status' => 'status', 'name' => 'name', 'company' => 'company', 'email' =>'m.email', 'user_role' => 'user_role', 'create_date_formatted' => 'm.create_date'), 'create_date_formatted', false);
+        $nav = new DBNavigator('pos', $query, array(), 'position');
         
-        $header_num = $nav->add_header($this->Application->Localizer->get_string('status'), 'status');
+        $header_num = $nav->add_header($this->Application->Localizer->get_string('title'), 'title');
         $nav->headers[$header_num]->no_escape = true;
         $nav->headers[$header_num]->align = "center";
-        $nav->set_width($header_num, '5%');
+        $nav->headers[$header_num]->set_width('99%');
+        $nav->headers[$header_num]->set_wrap(true);
 
-        $header_num = $nav->add_header($this->Application->Localizer->get_string('name'), 'name');
+        $header_num = $nav->add_header($this->Application->Localizer->get_string('position'), 'position');
         $nav->headers[$header_num]->no_escape = false;
         $nav->headers[$header_num]->set_wrap();
-        $nav->set_width($header_num, '15%');
-
-        $header_num = $nav->add_header($this->Application->Localizer->get_string('company'), 'company');
-        $nav->headers[$header_num]->no_escape = false;
-        $nav->headers[$header_num]->set_wrap();
-        $nav->set_width($header_num, '20%');
-
-        $header_num = $nav->add_header($this->Application->Localizer->get_string('email'), 'email');
-        $nav->headers[$header_num]->no_escape = false;
-        $nav->headers[$header_num]->set_wrap();
-        $nav->set_width($header_num, '20%');
-
-        $header_num = $nav->add_header($this->Application->Localizer->get_string('user_role'), 'user_role');
-        $nav->headers[$header_num]->no_escape = false;
-        $nav->set_width($header_num, '20%');
-
-        $header_num = $nav->add_header($this->Application->Localizer->get_string('create_date'), 'create_date_formatted');
-        $nav->headers[$header_num]->no_escape = false;
-        $nav->set_width($header_num, '20%');
-
-        $users = array(1);
-        $nav->set_disabled_list($users);
-        $this->tv['clickLink'] = $this->Application->Navi->getUri('./user_edit/', true);
-
-        if ($nav->size > 1)
-            $this->template_vars[$this->_table . '_show_remove'] = true;
-        else
-            $this->template_vars[$this->_table . '_show_remove'] = false;*/
+        $nav->headers[$header_num]->set_width('5%');
+        $nav->headers[$header_num]->set_position();
+        CInput::set_select_data('parent_id_dbposition', array(1 => 'first parent', 2 => 'second parent', 3 => 'third parent'));
+        CInput::set_select_data('category_id_dbposition', array(1 => 'first category', 2 => 'second category', 3 => 'third category'));
+        $nav->swapPosition("SELECT id, title, parent_id, category_id, position FROM position", array('parent_id' => 'Parent', 'category_id' => 'Category'));
+        
+        
+        //print_arr($GLOBALS['control_tv']);
 	}
 }
 ?>

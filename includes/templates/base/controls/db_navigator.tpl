@@ -114,6 +114,10 @@
 							<? endif;?>
 							<? if($data['mail']): ?>
 								<a href="mailto:<? echo $row[$field]; ?>" title="<? CTemplate::loc_string('click_for_send_message'); ?>"><? echo $row[$field]; ?></a>
+							<? elseif($data['swapPosition'] && $dbposition_show): ?>
+								<a href="#" class="popup-open popup-swappos" dbnavigator="<? echo $object_id; ?>" title="<? CTemplate::loc_string('open_swapposition_popup'); ?>">&nbsp;</a>
+								<? echo $row[$field]; ?> 
+								<div class="clear">&nbsp;</div>
 							<? else: ?>
 								<? echo $row[$field]; ?>
 							<? endif; ?> 
@@ -130,3 +134,65 @@
 		</div>
 	<? endif; ?>
 </div>
+<? if($dbposition_show): ?>
+	<script type="text/javascript">
+	$(function(){
+		$('#<? echo $object_id; ?>_dbsortable').swapPosition('position');
+	});
+	</script>
+	<div id="<? echo $object_id; ?>_dbposition" class="popupblock">
+		<div class="popup">
+		<div class="bg">&nbsp;</div>
+			<div class="cont">
+				<h1><span id="popup-title"><? CTemplate::loc_string('Position'); ?></span> <a href="#" class="close popup-swappos"><? CTemplate::loc_string('close'); ?></a></h1>
+				<div id="<? echo $object_id; ?>_dbsortable" class="popupbody">
+					<div class="right_block popupmenu sortable_form">
+						<? if($dbposition_filters): ?>
+							<? foreach ($dbposition_filters as $field => $text): ?>
+								<div class="field">
+									<label for="<? echo $field; ?>_dbposition"><? echo $text; ?></label>
+									<? CTemplate::input('select', "{$field}_dbposition", "{$field}_dbposition", 'sel sortable_select'); ?>
+								</div>
+							<? endforeach; ?>
+						<? endif; ?>
+						<div class="field">
+							<label for="pos_start"><? CTemplate::loc_string('start_pos'); ?></label>
+							<input type="text" id="pos_start" name="pos_start" class="inp inp25 pos_start" />
+						</div>
+						<div class="field">
+							<label for="pos_end"><? CTemplate::loc_string('end_pos'); ?></label>
+							<input type="text" id="pos_end" name="pos_end" class="inp inp25 pos_end" />
+						</div>
+						<div class="field right_block">
+							<div class="finpwrapper"><input type="button" name="pos_clear" value="<? CTemplate::loc_string('clear'); ?>" class="fbutt pos_clear" /></div>
+							<div class="finpwrapper"><input type="button" name="pos_filter" value="<? CTemplate::loc_string('sort'); ?>" class="fbutt pos_filter" /></div>
+						</div>
+					</div>
+					
+					<div id="<? echo $object_id; ?>sortable_body" class="body sortable_body">
+						<? foreach ($dbposition as $object): ?>
+							<div class="row" <? echo $dbposition_id_field; ?>="<? echo $object['id']; ?>" position="<? echo $object['position']; ?>" 
+									<? if($dbposition_filters): ?>
+										<? foreach ($dbposition_filters as $field => $text): ?>
+											<? echo $field; ?>_dbposition="<? echo $object[$field]; ?>"
+										<? endforeach; ?>
+									<? endif; ?>
+								>
+								<div class="txt"><? echo $object['text']; ?></div>
+								<div class="control">
+									<a href="#" class="swappos top">&nbsp;</a>
+									<input type="text" class="inp inp25 sortable_inp" value="<? echo $object['position']; ?>" />
+									<a href="#" class="swappos bottom">&nbsp;</a>
+									<a href="#" class="swappos interchange">&nbsp;</a>
+								</div>
+								<div class="clear">&nbsp;</div>
+							</div>
+						<? endforeach; ?>
+						<div class="clear">&nbsp;</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<? endif; ?>
+
