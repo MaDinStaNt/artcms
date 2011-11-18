@@ -158,11 +158,22 @@ class DBNavigator extends CControl
 		return $this->headers[$name];
 	}
 	
+	/**
+	 * @package ArtCMS.Base
+	 */
 	/*
+	--------------------------------------------------------------------------------
+	function swapPosition v1.0
+	function use for simple move positions in DBNavigator
+	
+	For internal use only
 		- query: sql string without WHERE, ORDER and GROUP functions
 		- filter_arr: array( condition_field => text (for label) )
 		- filter_val: array( condition_field => array or recordset for select )
 		- position_fields: array( condition_field => position_field ) or position field
+		
+	history:
+		v 1.0 - created (AT)
 	*/
 	
 	function swapPosition($query, $filter_arr = array(), $filter_val = array(), $position_fields = 'position', $mode = 'ASC', $id_field = 'id', $text_field = 'title')

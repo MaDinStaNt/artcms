@@ -292,3 +292,81 @@ $.fn.swapPosition = function(table, id_field, pos_fields, cond_fields, type) {
     	$(this).dequeue();
     });
 };
+
+$.fn.Watermark = function(txt, type) {
+	type = type || "fx";
+	txt = txt || 'Something text';
+    return this.queue(type, function() {
+    	if($(this).val() == '')
+    		$(this).val(txt);
+        $(this).blur(function(){
+        	if($(this).val() == ''){
+				$(this).val(txt);
+			}
+        });
+        $(this).focus(function(){
+        	if($(this).val() == txt){
+				$(this).val('');
+			}
+        });
+        $(this).dequeue();
+    });
+};
+$.fn.resizableInp = function( type ) {
+	type = type || "fx";
+    return this.queue(type, function() {
+    	var old_strlen = $(this).val().length;
+    	$(this).keyup(function(eventObject){
+	    	strlen_val = $(this).val().length;
+			if(strlen_val !== old_strlen && strlen_val < 255 && strlen_val > 1)
+			{
+				$(this).width(strlen_val * 7);
+				old_strlen = strlen_val;
+			}
+			else
+			{
+				$(this).width(14);
+			}
+		});
+        $(this).dequeue();
+    });
+};
+$.fn.autocompleteInp = function( values, notfnd_txt, type ) {
+	values = values || [];
+	notfnd_txt = notfnd_txt || 'Matches not found';
+	type = type || "fx";
+    return this.queue(type, function() {
+    	$(this).focusin(function(){
+    		$(this).focus();
+    		$(this).keyup();
+    	});
+    	$(this).keyup(function(eventObject){
+    		var val = $(this).val();
+    		var matches = [];
+    		var cont = $(this).parents('.select-cont .custom-select-cont');
+    		cont.children('.custom-option').children('ul').html('');
+    		$(this).parents('.select-cont').addClass('expand');
+    		k = 0;
+	    	for(i = 0; i < values.length; i++)
+	    	{
+	    		str = new String(values[i]);
+	    		part = str.substring(0, val.length);
+	    		if(part == val){
+	    			matches[k] = values[i];
+	    			k++;
+	    		}
+	    	}
+	    	
+	    	cont.children('.custom-option').show();
+	    	if(matches.length > 0)
+		    	for(i = 0; i < matches.length; i++)
+		    	{
+		    		cont.children('.custom-option').children('ul').append('<li>'+ matches[i] +'</li>');
+		    	}
+	    	else
+	    		cont.children('.custom-option').children('ul').append('<li class="message">'+ notfnd_txt +'</li>');
+		});
+		
+        $(this).dequeue();
+    });
+};

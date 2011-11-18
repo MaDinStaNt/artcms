@@ -37,11 +37,13 @@ ul, ol{list-style-type:none;}
 .inp1{width:50px;}
 .inpDate{width:60px;}
 .inp25{width:25px;}
+.inpHide{background:#ffffff;border:none;padding:0px;font-size:11px;vertical-align:top;width:14px;}
 .chk{vertical-align:middle;}
 #wrapper .customsel{display:none;position:absolute;z-index:-1;left:0;top:0;vertical-align:middle;}
 #wrapper .custom-select-cont{position:relative;}
 #wrapper .custom-select{height:17px;background:#ffffff;border:1px solid #bdbdbc;display:inline-block;width:254px;position:relative;text-align:left;color:#000000;cursor:pointer;}
 #wrapper .custom-select .exp-butt{background:url(../images/admin/ico-exp-butt.png) no-repeat left bottom;width:15px;height:15px;position:absolute;right:1px;top:1px;}
+#wrapper .expand .custom-select .exp-butt{background-position:left top;}
 #wrapper .custom-select .val, #wrapper .custom-option .val{display:none;}
 #wrapper .custom-select ul{margin:2px 20px 0 5px;}
 #wrapper .custom-select ul li{display:none;float:none;}

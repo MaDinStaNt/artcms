@@ -11,13 +11,55 @@
 	
 		<script type="text/javascript">
 		$(function(){
-			//alert($('#<? echo $object_id; ?> ul li').length);
-			if($('#<? echo $object_id; ?> .custom-select ul li').length == 0) $('#<? echo $object_id; ?> .custom-select ul').html('<li class="selected"><span class="val">&nbsp;</span>...</li>');
-			$('#<? echo $object_id; ?> .custom-select').click(function(){
-				$('#<? echo $object_id; ?> .custom-option').toggle();
+			values = [
+				<? foreach ($pages as $page): ?>
+					<? echo $page; ?>,
+				<? endforeach; ?>
+			];
+			$('#<? echo $object_id; ?>_val').Watermark('...').resizableInp().autocompleteInp(values, "<? CTemplate::loc_string('pages_not_found'); ?>").keyup(function(event){
+				if(event.keyCode == 13)
+				{
+					gotoURL("<? echo $link; ?>"+ $(this).val());
+				}
 			});
+			<? foreach ($pages as $page): ?>
+				<? if($page == $curr_page): ?>
+					var old_val = "<? echo $page; ?>";
+					$('#<? echo $object_id; ?>_val').val("<? echo $page; ?>");
+				<? endif; ?>
+			<? endforeach; ?>
 			
-			$('#<? echo $object_id; ?> .custom-option li').hover(function(){$(this).addClass('act')}, function(){$(this).removeClass('act')});
+			
+			$('#<? echo $object_id; ?> .custom-option li:not(.message)').live({
+				mouseenter: function(){
+					$(this).addClass('act');
+				},
+				mouseleave: function(){
+					$(this).removeClass('act')
+				},
+				click: function(){
+					$(this).parents('.select-cont').removeClass('expand');
+					$(this).parents('.select-cont .custom-select-cont').children('.custom-option').hide();
+					$('#<? echo $object_id; ?>_val').val($(this).text());
+					gotoURL("<? echo $link; ?>"+ $(this).text());
+				}
+			});
+			$('#<? echo $object_id; ?> .exp-butt').click(function(){
+				if($(this).hasClass('expand'))
+				{
+					$(this).parents('.select-cont').removeClass('expand');
+					$(this).parents('.select-cont .custom-select-cont').children('.custom-option').hide();
+					$('#<? echo $object_id; ?>_val').val(old_val);
+					$(this).removeClass('expand');
+				}
+				else
+				{
+					$('#<? echo $object_id; ?>_val').val('');
+					$('#<? echo $object_id; ?>_val').keyup();
+					$('#<? echo $object_id; ?>_val').focus();
+					$(this).addClass('expand');
+				}
+			});
 		});
 		</script>
 		<? for($page = 1; $page <= $cnt_left; $page++): ?>
@@ -32,19 +74,13 @@
 			<div class="custom-select-cont">
 				<div class="custom-select">
 					<ul>
-						<? foreach ($pages as $page): ?>
-							<? if($page == $curr_page): ?>
-								<li class="selected"><span class="val"><? echo $page; ?></span><? echo $page; ?></li>
-							<? endif; ?>
-						<? endforeach; ?>
+						<li class="selected"><span class="val">&nbsp;</span><? CTemplate::input('text', "{$object_id}_val", "{$object_id}_val", 'inpHide'); ?></li>
 					</ul>
 					<div class="exp-butt">&nbsp;</div>
 				</div>
 				<div class="custom-option">
 					<ul>
-						<? foreach ($pages as $page): ?>
-							<li onclick="gotoURL('<? echo $link; ?><? echo $page; ?>');"><span class="val"><? echo $page; ?></span><? echo $page; ?></li>
-						<? endforeach; ?>
+						
 					</ul>
 				</div>
 			</div>
