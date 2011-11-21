@@ -130,14 +130,14 @@ class CUsersPage extends CMasterPage
         $nav->headers[$header_num]->set_wrap();
         $nav->headers[$header_num]->set_width('5%');
         $nav->headers[$header_num]->set_position();
-        /*$parent_arr = array( '' => RECORDSET_FIRST_ITEM, 1 => 'first parent', 2 => 'second parent', 3 => 'third parent');
+        $parent_arr = array( '' => RECORDSET_FIRST_ITEM, 1 => 'first parent', 2 => 'second parent', 3 => 'third parent');
         $category_arr = array( '' => RECORDSET_FIRST_ITEM, 1 => 'first category', 2 => 'second category', 3 => 'third category');
         $nav->swapPosition("SELECT id, title, parent_id, category_id, position, pos_category FROM position",
         	array('parent_id' => 'Parent', 'category_id' => 'Category'), 
         	array('parent_id' => $parent_arr, 'category_id' => $category_arr), 
         	array('parent_id' => 'position', 'category_id' => 'pos_category')
-        );*/
-        $nav->swapPosition("SELECT id, title, parent_id, category_id, position, pos_category FROM position");
+        );
+        //$nav->swapPosition("SELECT id, title, parent_id, category_id, position, pos_category FROM position");
         
         
         //print_arr($GLOBALS['control_tv']);
