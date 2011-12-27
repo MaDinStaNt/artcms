@@ -156,8 +156,14 @@ ul, ol{list-style-type:none;}
 #body .paginator{float:right;list-style-type:none;color:#9f9f9f;}
 #body .paginator li{float:left;padding:2px 5px;font-weight:bold;margin-right:2px;}
 #body .paginator li.act{background:#f6f6f0;border:1px solid #bbbbbb;color:#437db6;}
-#body .paginator li.select-cont{padding:0;}
+#body .paginator li.select-cont{padding:0;margin-right:10px;}
 #body .paginator .custom-select{width:auto;}
+#body .paginator li.arrow{padding:0;}
+#body .paginator li.arrow a{width:19px;height:19px;background:url(../images/admin/arrows.png) no-repeat;display:block;}
+#body .paginator li.first a{background-position:left top;}
+#body .paginator li.prev a{background-position:-19px top;}
+#body .paginator li.next a{background-position:-38px top;}
+#body .paginator li.last a{background-position:right top;}
 
 /* ---dbnavsize--- */
 .dbnavsize{margin:5px 0;}

@@ -30,23 +30,34 @@ class Paginator extends CControl{
 					$this->tv['link'] .= "&{$varname}={$value}";
 					
 			$this->tv['link'] .= "&{$this->getpost_var}=";
+
+			for($i = 0; $i < $this->cnt_pages; $i++)
+				$this->tv['pages'][] = $i + 1;
+				
 			if($this->cnt_pages > ($this->number_left_wing + $this->number_right_wing))
 			{
-				$this->tv['lower_total_numb'] = false;
-				$this->tv['cnt_left'] = $this->number_left_wing;
-				$this->tv['cnt_right'] = $this->number_right_wing;
-				$this->tv['right_start'] = $right_start = $this->cnt_pages - $this->number_right_wing + 1;
-				
-				for($i = $this->number_left_wing + 1; $i < $right_start; $i++)
-					$this->tv['pages'][] = $i;
-			}
-			else
-			{
-				for($i = 0; $i < $this->cnt_pages; $i++)
-				{
-					$this->tv['lower_total_numb'] = true;
-					$this->tv['pages'][] = $i + 1;
+				$this->tv['show_buttons'] = true;
+				$this->tv['left_buttons_show'] = ($this->curr_page > 1);
+				$this->tv['right_buttons_show'] = ($this->curr_page < $this->cnt_pages);
+				$this->tv['first_page'] = 1;
+				$this->tv['last_page'] = $this->cnt_pages;
+				$this->tv['prev_page'] = $this->curr_page - 1;
+				$this->tv['next_page'] = $this->curr_page + 1;
+				if($this->curr_page <= $this->number_left_wing){
+					for($i = 0; $i <= ($this->number_left_wing + $this->number_right_wing); $i++)
+						$this->tv['showed_pages'][] = $i + 1;
 				}
+				elseif($this->curr_page > ($this->cnt_pages - $this->number_right_wing))
+					for($i = ($this->cnt_pages - $this->number_left_wing - $this->number_right_wing); $i <= $this->cnt_pages; $i++)
+						$this->tv['showed_pages'][] = $i;
+				else 
+					for($i = ($this->curr_page - $this->number_left_wing); $i <= ($this->curr_page + $this->number_right_wing); $i++)
+						$this->tv['showed_pages'][] = $i;
+			}
+			else 
+			{
+				$this->tv['showed_pages'] = $this->tv['pages'];
+				$this->tv['show_buttons'] = false;
 			}
 		}
 	}
