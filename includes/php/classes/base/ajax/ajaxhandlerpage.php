@@ -14,7 +14,12 @@ class CAjaxHandlerPage extends CHTMLPage
 		if ($bll_class_name = InGetPost('bll_class_name', false)) {
 			$this->Mod =& $this->Application->get_module(InGetPost('bll_class_name', false), true);
 			if ($method_name = InGetPost('method_name', false)) {
-				echo json_encode(call_user_method_array($method_name, $this->Mod, InGetPost('parameters', array())));
+				$res = call_user_method_array($method_name, $this->Mod, InGetPost('parameters', array()));
+				$return = array('response' => $res);
+				if($res == false)
+					$return['errors'] = $this->Mod->get_last_error();
+					
+				echo json_encode($return);
 				die();
 			}
 		}

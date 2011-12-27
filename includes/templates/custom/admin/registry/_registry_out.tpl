@@ -26,6 +26,17 @@ $(function(){
 	else
 		$('.registry_path').css('border-top', '1px solid #B8B8B8');
 });
+function delete_rp(id)
+{
+	call('Inputs', 'delete_rp', [id]).listen(function(res){
+		if(res.response == false)
+		{
+			alert(res.errors);
+			return false;
+		}
+		document.location = '';
+	});
+}
 </script>
 <div class="col left_block" style="margin-right:35px;">
 	<div class="tree">

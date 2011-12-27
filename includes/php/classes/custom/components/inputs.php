@@ -46,173 +46,6 @@ class CInputs
 		return $str;
 	}
 
-	function generate_ls_name($string)
-	{
-		if(!is_string($string))
-		return  array('errors' => $this->Localizer->get_string('invalid_input'));
-
-		return array('name' => strtolower(preg_replace('/[^a-z0-9]+/iu', '_', trim($string))));
-	}
-
-	function generate_parent_title($parent_id)
-	{
-		if(!is_numeric($parent_id))
-		return array('errors' => $this->Localizer->get_string('invalid_input'));
-
-		$lang_rs = $this->Localizer->get_languages();
-		if($lang_rs === false || $lang_rs->eof())
-		return array('errors' => $this->Localizer->get_string('internal_error'));
-
-		$sql = "SELECT ";
-		while (!$lang_rs->eof())
-		{
-			$sqls[] = "CONCAT(
-					IF(c.parent_id > 0, 
-						CONCAT((SELECT value FROM category_parent_title WHERE category_id = c.id AND language_id = {$lang_rs->get_field('id')}), '::')
-					, ''),
-					(SELECT value FROM category_title WHERE category_id = c.id AND language_id = {$lang_rs->get_field('id')})
-			) as {$lang_rs->get_field('title')}";
-			$lang_rs->next();
-		}
-		$sql .= join(', ', $sqls)." FROM category c WHERE c.id = {$parent_id}";
-		$check_rs = $this->DataBase->select_custom_sql($sql);
-		if($check_rs !== false && !$check_rs->eof())
-		{
-			$check_rs->first();
-			$arr = array();
-			row_to_vars($check_rs, $arr);
-			return array('arr' => $arr);
-		}
-
-		return false;
-	}
-
-	function generate_category_title($category_id, $lang_id = null)
-	{
-		if(!is_numeric($category_id))
-		return array('errors' => $this->Localizer->get_string('invalid_input'));
-
-		if(is_null($lang_id) || !is_numeric($lang_id))
-		$lang_id = $this->tv['language_id'];
-
-		$sql = "
-    	SELECT
-    		IF(c.parent_id > 0, CONCAT(cpt.value, '::', ct.value), ct.value) as title
-    	FROM
-    		category c join category_title ct on ((ct.category_id = c.id AND ct.language_id = {$lang_id})) left join category_parent_title cpt on ((cpt.category_id = c.id AND cpt.language_id = {$lang_id}))
-    	WHERE
-    		c.id = {$category_id}
-    	";	
-		$rs = $this->DataBase->select_custom_sql($sql);
-
-		return (($rs !== false && !$rs->eof()) ? $rs->get_field('title') : array('errors' => $this->Localizer->get_string('internal_error')));
-	}
-
-	function add_software_from_pad()
-	{
-		$pad_rs = $this->DataBase->select_sql('padfile', array('status' => PAD_STATUS_NOT_UPLOADED), 0, null, true, '1');
-		if($pad_rs === false)
-		return array('errors' => $this->Localizer->get_string('database_error'));
-
-		if($pad_rs->eof())
-		return array('success' => $this->Localizer->get_string('parsing_finished'));
-
-		if(strlen($pad_rs->get_field('url')) > 0)
-		{
-			require_once(BASE_CLASSES_PATH.'components/xml.php');
-			$xml = new XMLToArray( $pad_rs->get_field('url'), array(), array(), true, false );
-			//$xml = new XMLToArray( 'http://12ghosts.com/pad/pad_lookup.xml', array(), array(), true, false );
-			$software = $this->Application->get_module('Software');
-			//print_arr($pad_rs->get_field('url'));
-			//return false;
-			$field_rs = $software->get_fields();
-			$lang_rs = $this->Application->Localizer->get_languages();
-			$xml_arr = $xml->getArray();
-			//print_arr($xml_arr);
-
-
-			if(!is_array($xml_arr))
-			{
-				$this->DataBase->update_sql('padfile', array('status' => PAD_STATUS_ERROR), array('id' => $pad_rs->get_field('id')));
-				return array('errors' => $this->Localizer->get_string('invalid_xml').': <a href="'.$pad_rs->get_field('url').'">'.$pad_rs->get_field('url').'</a>');
-			}
-			if($field_rs == false)
-			return array('errors' => $this->Localizer->get_string('field_recordset_is_empty'));
-
-			if($lang_rs == false)
-			return array('errors' => $this->Localizer->get_string('language_recordset_is_empty'));
-
-			$arr = array();
-			while (!$field_rs->eof())
-			{
-				$paths = explode('/', $field_rs->get_field('xml_path'));
-				$tmp = $xml_arr;
-				for($i = 0; $i < count($paths); $i++)
-				{
-					if($paths[$i] === '{loc_xml_path}')
-					{
-						$lang_rs->first();
-						while (!$lang_rs->eof())
-						{
-							$arr[$paths[$i + 1].':#:'.$lang_rs->get_field('title')] = $tmp[$lang_rs->get_field('xml_alias')][$paths[$i + 1]];
-							$lang_rs->next();
-						}
-						$i = count($paths);
-						continue;
-					}
-					elseif(!isset($tmp[$paths[$i]]))
-					{
-						$arr[$paths[$i]] = '';
-						continue;
-					}
-					elseif(is_array($tmp[$paths[$i]]))
-					{
-						$arr[$paths[$i]] = '';
-						$tmp = $tmp[$paths[$i]];
-						continue;
-					}
-					else
-					{
-						$arr[$paths[$i]] = $tmp[$paths[$i]];
-					}
-				}
-				$field_rs->next();
-			}
-
-			if(strlen($arr[''.CUSTOM_FIELD_CATEGORY_ID.'']) > 0)
-			$category_rs = $software->get_category_by_title($arr[''.CUSTOM_FIELD_CATEGORY_ID.'']);
-
-			$pad_status = PAD_STATUS_UPLOADED;
-			if(!$category_rs || $category_rs == false)
-			{
-				$arr['category_id'] = 0;
-				$arr['status'] = SOFT_STATUS_ERROR;
-				$pad_status = PAD_STATUS_ERROR;
-			}
-			else
-			{
-				$arr['category_id'] = $category_rs->get_field('id');
-				$arr['status'] = SOFT_STATUS_PENDING_APPROVE;
-			}
-
-			//print_arr($arr);
-			//return false;
-			if(!$software->add_software($arr))
-			{
-				$this->DataBase->update_sql('padfile', array('status' => PAD_STATUS_ERROR), array('id' => $pad_rs->get_field('id')));
-				return array('errors' => $software->get_last_error());
-			}
-			else
-			{
-				$this->DataBase->update_sql('padfile', array('status' => $pad_status), array('id' => $pad_rs->get_field('id')));
-				return array('info' => true);
-			}
-		}
-		else
-		return array('errors' => $this->Localizer->get_string('database_error'));
-
-	}
-
 	function rebuild_positions($table, $id_field = 'id', $pos_field = 'position', $field_cond = false)
 	{
 		if(!$field_cond || $field_cond == 'false'){
@@ -342,6 +175,23 @@ class CInputs
 		}
 		
 		return false;
+	}
+	
+	function delete_rp($id)
+	{
+		if(!is_numeric($id))
+		{
+			$this->last_error = $this->Application->Localizer->get_string('invalid_input');
+			return false;
+		}
+		
+		if(!$this->DataBase->delete_sql('registry_path', array('id' => $id)))
+		{
+			$this->last_error = $this->Application->Localizer->get_string('database_error');
+			return false;
+		}
+		
+		return true;
 	}
 };
 ?>

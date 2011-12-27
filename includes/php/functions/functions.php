@@ -80,7 +80,8 @@ function code2utf($num)
 }
 function utf16parse($t)
 {
-	$t = preg_replace('/\&\#([0-9]+)\;/me', "((\\1>255)?(utf8_decode(code2utf(\\1))):('&#\\1;'))", $t);
+	if (!is_array($t)) $t = preg_replace('/\&\#([0-9]+)\;/me', "((\\1>255)?(utf8_decode(code2utf(\\1))):('&#\\1;'))", $t);
+	else foreach ($t as $k => $tv) $t[$k] = utf16parse($t[$k]);
 	return $t;
 }
 require_once(((get_magic_quotes_gpc())?('_in.quote.php'):('_in.php')));

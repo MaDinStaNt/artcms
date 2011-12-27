@@ -11,8 +11,8 @@ border: none;
 }
 
 html, body{font:11px/13px Tahoma;color:#5c5c5c;width:100%;height:100%;margin:0;padding:0;}
-a{color:#5c5c5c;}
-a:hover{text-decoration:none;}
+#wrapper a{color:#5c5c5c;}
+#wrapper a:hover{text-decoration:none;}
 ul, ol{list-style-type:none;}
 #wrapper{width:100%;height:100%;}
 #wrapper .left_block{float:left;}

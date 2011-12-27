@@ -74,13 +74,10 @@ class CImageEditPage extends CMasterEditPage
 				$this->Application->CurrentPage->internalRedirect($this->Application->Navi->getUri('./image_size_edit/', true) . 'image_id=' . $this->id);
 			break;
 			case 'delete_selected_objects':
-				$data = InGetPost("image_size_res", array());
+				$ids = InGetPost("image_size_res", array());
 	            $where="WHERE 1=1";
-	            if (sizeof($data) > 0) {
-	            	if(is_array($data))
-	            		$where .= " AND id in(".join(',', $data).")";
-	            	else
-	            		$where .= " AND id = '{$data}'";
+	            if (strlen($ids) > 0 && $ids !== '[]') {
+            		$where .= " AND id in ({$ids}) ";
 	                $sql = 'DELETE FROM %prefix%image_size ' . $where;
 	                if($this->Application->DataBase->select_custom_sql($sql)) {
 	                	$this->tv['_info'][] = $this->Application->Localizer->get_string('objects_deleted');

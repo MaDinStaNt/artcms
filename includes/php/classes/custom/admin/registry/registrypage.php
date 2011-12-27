@@ -152,7 +152,7 @@ class CRegistryPage extends CAdminPage
 				<a href="'.$this->Application->Navi->getUri().'&path_id='.$arr['id'].'" title="'.$this->Application->Localizer->get_string('goto').' \''.$arr['title'].'\'" '.(($path_id == $arr['id']) ? 'class="title"' : null).'>'.$arr['title'].'</a>';
 			if($DebugLevel > 0)
 				$tree .= '<a href="'.$this->Application->Navi->getUri().'.path_edit&id='.$arr['id'].'" class="edit"><span class="inv">edit</span></a>
-					<a href="#" class="delete"><span class="inv">delete</span></a>';
+					<a href="javascript: delete_rp('.$arr['id'].');" class="delete"><span class="inv">delete</span></a>';
 			if(!empty($arr['children'])) $this->build_tree($arr['children']);
 			$tree .= '</li>';
 		}

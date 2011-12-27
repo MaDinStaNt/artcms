@@ -47,6 +47,7 @@ class CPathEditPage extends CMasterEditPage
     	
     	$path_rs = $this->Registry->get_pathes();
     	if($path_rs == false) $path_rs = new CRecordSet();
+    	$path_rs->add_field('parent_id');
     	if($path_rs->find('id', $this->id)) $path_rs->delete_row();
     	$path_rs->add_row(array('id' => '', 'title' => RECORDSET_FIRST_ITEM), INSERT_BEGIN);
     	$path_rs->first();
@@ -75,7 +76,8 @@ class CPathEditPage extends CMasterEditPage
 
         require_once(BASE_CLASSES_PATH . 'controls/dbnavigator.php'); // base application class
         $nav = new DBNavigator('registry_value', $query, array('path', 'type', 'title', 'required'), 'id');
-        $nav->row_clickaction = $this->Application->get_module('Navi')->getUri().".path_value_edit&path_id={$this->id}&id=";
+        $nav->set_row_clickaction($this->Application->get_module('Navi')->getUri().".path_value_edit&path_id={$this->id}&id=");
+        $nav->set_table('registry_value');
         $nav->title = 'Values';
         
         $header_num = $nav->add_header('path');
@@ -109,6 +111,19 @@ class CPathEditPage extends CMasterEditPage
 			case 'add_registry_value':
 				$this->Application->CurrentPage->internalRedirect($this->Application->Navi->getUri('./path_value_edit')."&path_id={$this->id}");
 			break;
+			case 'delete_selected_objects':
+				$ids = InGetPost("registry_value_res", '');
+	            $where="WHERE 1=1";
+	            if (strlen($ids) > 0 && $ids !== '[]') {
+	            	$where .= " AND id in ({$ids}) ";
+	                $sql = 'DELETE FROM %prefix%registry_value ' . $where;
+	                if($this->Application->DataBase->select_custom_sql($sql)) {
+	                	$this->tv['_info'][] = $this->Application->Localizer->get_string('objects_deleted');
+	                } 
+	                else $this->tv['_errors'][] = $this->Application->Localizer->get_string('internal_error');
+	           } 
+	           else $this->tv['_info'][] = $this->Application->Localizer->get_string('noitem_selected');
+			break;
 			default:
 				CValidator::add('language_id', VRT_NUMBER, false, 1);
 				CValidator::add_nr('parent_id', VRT_NUMBER, false, 1);
@@ -126,7 +141,7 @@ class CPathEditPage extends CMasterEditPage
 					else {
 						if ($this->tv['id'] = $this->Registry->add_path($this->tv)) {
 							$this->tv['_info'] = $this->Localizer->get_string('object_added');
-							//$this->tv['_return_to'] =  $this->Application->Navi->getUri().'&id='.$this->tv['id'];
+							$this->tv['_return_to'] =  $this->Application->Navi->getUri().'&id='.$this->tv['id'];
 						}
 						else {
 							$this->tv['_errors'] = $this->Registry->get_last_error();

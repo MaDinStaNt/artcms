@@ -23,6 +23,7 @@ class CPathValueEditPage extends CMasterEditPage
 
 	function on_page_init()
 	{
+		parent::on_page_init();
 		$this->bind_data();
 		CValidator::add('path_id', VRT_NUMBER, false, 1);
 		CValidator::add('type', VRT_NUMBER, false, 1);
