@@ -24,7 +24,7 @@
 		<div class="clear">&nbsp;</div>
 		<div class="buttons">
 			<div class="finpwrapper"><? CTemplate::button("{$object_id}_clear", "clear", CTemplate::get_loc_string('clear'), 'fbutt'); ?></div>
-			<div class="finpwrapper"><? CTemplate::button("{$object_id}_filter", "filter", CTemplate::get_loc_string('filter'), 'fbutt'); ?></div>
+			<div class="finpwrapper"><? CTemplate::submit("{$object_id}_filter", "filter", CTemplate::get_loc_string('filter'), 'fbutt'); ?></div>
 		</div>
 	</div>
 <? endif; ?>

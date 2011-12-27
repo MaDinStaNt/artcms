@@ -5,6 +5,7 @@ class CControl
 	public $Application;
 	public $html_page;
 	public $template;
+	public $object_id;
 
 	function CControl($name, $object_id = null)
 	{
@@ -29,6 +30,8 @@ class CControl
 
 		$this->html_page = &$this->Application->CurrentPage;
 		$this->html_page->m_Controls[] = &$this;
+		if(!is_null($object_id))
+			$this->tv['object_id'] = $this->object_id = $object_id;
 	}
 
 	function on_page_init(){

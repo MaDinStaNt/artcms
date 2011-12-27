@@ -24,7 +24,12 @@ class Paginator extends CControl{
 		if($this->check_input()){
 			$this->tv['cnt_pages'] = $this->cnt_pages = ceil($this->total_items / $this->item_on_page);
 			if(!$this->curr_page) $this->curr_page = InGetPost($this->getpost_var, 1);
-			$this->tv['link'] = $this->Application->get_module('Navi')->getUri()."&{$this->getpost_var}=";
+			$this->tv['link'] = $this->Application->get_module('Navi')->getUri();
+			foreach ($_GET as $varname => $value)
+				if($varname !== 'r' && $varname !== $this->getpost_var)
+					$this->tv['link'] .= "&{$varname}={$value}";
+					
+			$this->tv['link'] .= "&{$this->getpost_var}=";
 			if($this->cnt_pages > ($this->number_left_wing + $this->number_right_wing))
 			{
 				$this->tv['lower_total_numb'] = false;

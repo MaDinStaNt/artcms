@@ -14,7 +14,7 @@ array(
 				1 => array(
 					'title' => 'User roles', 'tag' => 'roles', 'class' => 'admin/users/RolesPage.php', 'template' => 'admin/users/roles.tpl', 'children' => array(
 		                0 => array(
-		                        'title' => 'Role add/edit', 'tag' => 'user_role_edit', 'class' => 'admin/users/UserRoleEditPage.php', 'template' => 'admin/users/user_role_edit.tpl'
+		                        'title' => 'Role add/edit', 'tag' => 'user_role_edit', 'class' => 'admin/users/UserRoleEditPage.php', 'template' => 'admin/users/user_role_edit.tpl', 'mode' => 'hidden'
 		            	),
 					),
 				),

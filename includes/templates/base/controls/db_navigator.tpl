@@ -5,6 +5,8 @@
 			<div class="clear">&nbsp;</div>
 		</div>
 	<? else: ?>
+		<? CControl::process('DBNavSize', $object_id); ?>
+		<div class="clear">&nbsp;</div>
 		<div class="heading">
 			<span class="ttl"><? echo $title; ?></span> <span class="stt">(<? echo $total_items; ?>  <? CTemplate::loc_string('total'); ?>, <? CTemplate::loc_string('displaying'); ?> <? echo $row_numb_before; ?><? if($size > 1): ?> <? CTemplate::loc_string('to'); ?> <? echo $row_numb_end; ?><? endif; ?>)</span>
 			<? CControl::process('Paginator', $object_id.'_top'); ?>
@@ -132,6 +134,8 @@
 		<div class="foot">
 			<? CControl::process('Paginator', $object_id.'_bottom'); ?>
 		</div>
+		<div class="clear">&nbsp;</div>
+		<? CControl::process('DBNavSize', $object_id); ?>
 	<? endif; ?>
 </div>
 <? if($dbposition_show): ?>

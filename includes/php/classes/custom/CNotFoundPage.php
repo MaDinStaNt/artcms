@@ -1,16 +1,15 @@
 <?php
-require_once(BASE_CLASSES_PATH. 'htmlpage.php');
+require_once(BASE_CLASSES_PATH. 'frontpage.php');
 
-class CNotFoundPage extends CHTMLPage {
-	
-	protected $user_rs;
+class CNotFoundPage extends CFrontPage  {
 	
 	function CNotFoundPage(&$app, $template){
 		parent::__construct($app, $template);	
 	}
 	
 	function on_page_init(){
-		$this->tv['PAGE_TITLE'] = $this->Application->Localizer->get_string('page_not_found');
+		parent::on_page_init();
+		$this->PAGE_TITLE = $this->Application->Localizer->get_string('page_not_found');
 	}
 	
 	function parse_data(){

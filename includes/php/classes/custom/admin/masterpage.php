@@ -49,6 +49,7 @@ class CMasterPage extends CAdminPage
 	
 	function on_page_init()
 	{
+		parent::on_page_init();
 		$this->tv['_table'] = $this->_table;
 		require_once(BASE_CONTROLS_PATH .'adminfilters.php');
 		new AdminFilters($this->_filters, $this->_table);
@@ -63,7 +64,7 @@ class CMasterPage extends CAdminPage
 
 		if (CForm::is_submit($this->_table, 'delete_selected_objects')) {
 			$ids = InGetPost("{$this->_table}_res", '');
-            $where="WHERE ".$this->_where;
+            $where="WHERE 1=1 ";
             if (strlen($ids) > 0 && $ids !== '[]') {
             	$where .= " AND id in ({$ids}) ";
                 $sql = 'DELETE FROM %prefix%'.$this->_table.' ' . $where;

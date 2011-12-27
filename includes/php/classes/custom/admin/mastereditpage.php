@@ -21,6 +21,7 @@ class CMasterEditPage extends CAdminPage
 	
 	function on_page_init()
 	{
+		parent::on_page_init();
 		$this->IsSecure = true;
 		$this->bind_data();
 	}
@@ -28,7 +29,10 @@ class CMasterEditPage extends CAdminPage
 	function bind_data() {
 		$this->tv['_table'] = $this->_table;
 
-		$this->id = $this->tv['id'] = (int)InGetPost('id');
+		if(!$this->tv['id'])
+			$this->tv['id'] = (int)InGetPost('id');
+		
+		$this->id = $this->tv['id'];
 		if ($this->id) {
 			if (!$this->_object_rs = $this->is_object_exists($this->id))
 			{
@@ -66,11 +70,11 @@ class CMasterEditPage extends CAdminPage
 						$this->tv['_errors'] = $mod->get_last_error();
 					}
 				}
+				$this->bind_data();
 			}
 			else {
 				$this->tv['_errors'] = CValidator::get_errors();
 			}
-			$this->bind_data();
 		}
 		elseif (CForm::is_submit($this->_table, 'close')) {
 			$this->Application->CurrentPage->internalRedirect($this->Application->Navi->getUri('parent', false));

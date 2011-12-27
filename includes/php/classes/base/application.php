@@ -15,6 +15,7 @@ require_once('localizer.php');
 require_once('validator.php');
 require_once('router.php');
 require_once('session.php');
+require_once('utils.php');
 //require_once('controls/form.php');
 /**
  * Main class for the site, extend CApp from it<br>

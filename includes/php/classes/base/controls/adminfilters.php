@@ -59,7 +59,7 @@ class AdminFilters extends CControl{
 		global $app;
 		if(CForm::is_submit($this->formname, 'clear'))
 			$this->cache = array();
-		elseif (CForm::is_submit($this->formname, 'filter'))
+		elseif (CForm::is_submit($this->formname))
 		{
 			if(CValidator::validate_input())
 			{

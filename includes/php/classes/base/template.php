@@ -3,10 +3,6 @@ $formname = '';
 $_it_fs = array();
 class CTemplate {
 	
-	function CTemplate() {
-		
-	}
-	
 	function get_loc_string($str){
 		return $GLOBALS['app']->Localizer->get_string($str);
 	}
@@ -105,7 +101,7 @@ class CTemplate {
 				echo '<textarea id="'.$id.'" name="'.$name.'" cols="'.$cols.'" rows="'.$rows.'"'.((strlen($class) > 0) ? ' class="'.$class.'"' : null).(($readonly) ? ' readonly' : null).' '.(($disabled) ? ' disabled' : null).'>'.$tv[$name].'</textarea>';
 		else 
 		{
-			$out = '
+			$out = '<div class="html-cont">
 		            <!-- TinyMCE -->
 					<script type="text/javascript" src="'.$tv['HTTP'].'js/tiny_mce/tiny_mce.js"></script>
 					<script type="text/javascript">
@@ -130,11 +126,22 @@ class CTemplate {
 						});
 					</script>
 					<!-- /TinyMCE -->';
-			$out .= '<textarea mce_editable="true" class="mceEditor" id="'.$id.'" name="'.$name.'">'.htmlspecialchars(strval($tv[$name])).'</textarea>';
+			$out .= '<textarea mce_editable="true" class="mceEditor" id="'.$id.'" name="'.$name.'">'.htmlspecialchars(strval($tv[$name])).'</textarea></div>';
 			echo $out;
 		}
 		if(!isset($_it_fs[$formname])) $_it_fs[$formname] = array();
 		$_it_fs[$formname][] = $name;
+	}
+	
+	function parse_string($str, $tv = null)
+	{
+		if(is_null($tv))
+			$tv = $app->tv;
+			
+		foreach ($tv as $var => $value)
+			$str = str_replace("<%={$var}%>", strval($value), $str);
+			
+		return $str;
 	}
 
 }

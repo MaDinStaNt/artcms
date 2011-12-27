@@ -87,8 +87,8 @@ require_once(((get_magic_quotes_gpc())?('_in.quote.php'):('_in.php')));
 
 function SetCacheVar($VarName, $Value, $CachId = 'common') {
 if (!strlen($CachId)) return;
-/*if (is_array($Value)) $_SESSION['cache'][$CachId] = array_merge($_SESSION['cache'][$CachId], $Value);
-else*/ $_SESSION['cache'][$CachId][$VarName] = $Value;
+if (is_array($Value)) $_SESSION['cache'][$CachId] = array_merge($_SESSION['cache'][$CachId], $Value);
+else $_SESSION['cache'][$CachId][$VarName] = $Value;
 }
 // set variables in template_vars ($tv) to values from array or CRecordSet(current row) or CRecordSetRow
 function row_to_vars(&$row, &$tv, $create_array = false, $prefix=''){

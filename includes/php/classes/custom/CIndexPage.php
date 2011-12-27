@@ -1,17 +1,16 @@
 <?php
-require_once(BASE_CLASSES_PATH. 'htmlpage.php');
+require_once(BASE_CLASSES_PATH. 'frontpage.php');
 
-class CIndexPage extends CHTMLPage {
+class CIndexPage extends CFrontPage {
 	
 	protected $user_rs;
 	
 	function CIndexPage(&$app, $template){
 		parent::__construct($app, $template);	
-		//phpinfo();
 	}
 	
 	function on_page_init(){
-		
+		parent::on_page_init();
 	}
 	
 	function parse_data(){

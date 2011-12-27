@@ -115,7 +115,7 @@ class CUsersPage extends CMasterPage
         	$this->tv['remove_btn_show'] = false;
         
         //print_arr($GLOBALS['control_tv']);
-        $query = "SELECT id, title, position FROM position";
+        /*$query = "SELECT id, title, position FROM position";
         
         $nav = new DBNavigator('pos', $query, array(), 'position');
         $nav->_table = 'position';
@@ -136,7 +136,7 @@ class CUsersPage extends CMasterPage
         	array('parent_id' => 'Parent', 'category_id' => 'Category'), 
         	array('parent_id' => $parent_arr, 'category_id' => $category_arr), 
         	array('parent_id' => 'position', 'category_id' => 'pos_category')
-        );
+        );*/
         //$nav->swapPosition("SELECT id, title, parent_id, category_id, position, pos_category FROM position");
         
         

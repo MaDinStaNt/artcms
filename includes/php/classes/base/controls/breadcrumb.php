@@ -27,7 +27,7 @@ class NaviBreadcrumb extends CControl{
 			if($arr['tag'] == $tag[0]){
 				$this->tv['titles'][] = $arr['title'];
 				$var_str = '';
-				if(!empty($this->cache[$tag[0]][0])) foreach ($this->cache[$tag[0]][0] as $var => $value) $var_str .= "&{$var}={$value}";
+				if(!empty($_SESSION['cache']['AdminBreadcrumb'][$tag[0]][0])) foreach ($_SESSION['cache']['AdminBreadcrumb'][$tag[0]][0] as $var => $value) $var_str .= "&{$var}={$value}";
 				$this->tv['links'][] = $tag[0].$var_str;
 				if(isset($arr['children']) && is_array($arr['children'])) $this->find_recursive(1, $tag, $arr['children']);
 			}
@@ -49,7 +49,7 @@ class NaviBreadcrumb extends CControl{
 					$this->tv['links'][$key] .= $tag[$i].'.';
 				$this->tv['links'][$key] = substr($this->tv['links'][$key], 0, -1);
 				$var_str = '';
-				if(!empty($this->cache[$tag[0]][$key])) foreach ($this->cache[$tag[0]][$key] as $var => $value) $var_str .= "&{$var}={$value}";
+				if(!empty($_SESSION['cache']['AdminBreadcrumb'][$tag[0]][$key])) foreach ($_SESSION['cache']['AdminBreadcrumb'][$tag[0]][$key] as $var => $value) $var_str .= "&{$var}={$value}";
 				$this->tv['links'][$key] .= $var_str;
 				$key++;
 				if(isset($arr['children']) && is_array($arr['children'])) $this->find_recursive($key, $tag, $arr['children']);
@@ -60,14 +60,13 @@ class NaviBreadcrumb extends CControl{
 	function write_cache($tags)
 	{
 		if(!isset($_SESSION['cache']['AdminBreadcrumb'])) $_SESSION['cache']['AdminBreadcrumb'] = array();
-		$this->cache = &$_SESSION['cache']['AdminBreadcrumb'];
 		$data = array();
 		foreach($_GET as $var => $val) 
 			if($var !== 'r') $data[$var] = $val;
 			
 		$key = count($tags) - 1;
-		if(!isset($this->cache[$tags[0]])) $this->cache = array();
-		$this->cache[$tags[0]][$key] = $data;
+		if(!isset($_SESSION['cache']['AdminBreadcrumb'][$tags[0]])) $_SESSION['cache']['AdminBreadcrumb'] = array();
+		$_SESSION['cache']['AdminBreadcrumb'][$tags[0]][$key] = $data;
 	}
 }
 ?>

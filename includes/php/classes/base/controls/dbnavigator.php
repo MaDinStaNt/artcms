@@ -17,14 +17,14 @@ class DBNavigator extends CControl
 	public $size;
 	public $cache;
 	public $cnt_query = false;
+	protected $sizes_arr = array();
 
-	function DBNavigator($object_id, $query, $sort_vars = array(), $default_sort_key = null, $default_sort_mode = 'ASC')
+	function DBNavigator($object_id, $query, $sort_vars = array(), $default_sort_key = null, $default_sort_mode = 'ASC', $sizes_arr = array())
 	{
 		parent::CControl('DBNavigator', $object_id);
 		$this->template = BASE_CONTROLS_TEMPLATE_PATH . 'db_navigator.tpl';
 		$this->object_id = $object_id;
 		$this->title = &$this->tv['title'];
-		$this->row_clickaction = &$this->tv['row_clickaction'];
 		$this->total_items = &$this->tv['total_items'];
 		$this->headers = array();
 		if(is_array($this->query))
@@ -38,6 +38,8 @@ class DBNavigator extends CControl
 		$this->default_sort_key = $default_sort_key;
 		$this->default_sort_mode = $default_sort_mode; 
 		$this->_table = &$this->tv['_table'];
+		if(is_array($sizes_arr) && !empty($sizes_arr))
+			$this->sizes_arr = $sizes_arr;
 		$this->bind_data();
 	}
 
@@ -76,8 +78,16 @@ class DBNavigator extends CControl
 		}
 		else $this->cache['page'] = $numb_page;
 		
-		$row_numb_before = ($numb_page - 1) * DBNAV_PAGE_SIZE;
-		$limit = ' LIMIT '. $row_numb_before .', '. DBNAV_PAGE_SIZE;
+		require_once(BASE_CONTROLS_PATH .'dbnavsize.php');
+		$DBNavSize = new DBNavSize($this->object_id);
+		if(is_array($sizes_arr) && !empty($sizes_arr))
+			$DBNavSize->set_sizes($sizes_arr);
+			
+		$DBNavSize->bind_data();
+		$page_size = $DBNavSize->get_size();
+		
+		$row_numb_before = ($numb_page - 1) * $page_size;
+		$limit = ' LIMIT '. $row_numb_before .', '. $page_size;
 		$row_numb_before++;
 		$this->tv['row_numb_before'] = $row_numb_before;
 		
@@ -97,28 +107,30 @@ class DBNavigator extends CControl
 		}
 		
 		$this->total_items = ((!$this->cnt_query) ? $cnt_rs->get_record_count() : $cnt_rs->get_field('cnt'));
-		$cnt_page = ceil($this->total_items / DBNAV_PAGE_SIZE);
+		$cnt_page = ceil($this->total_items / $page_size);
 		if($numb_page == $cnt_page) $this->tv['row_numb_end'] = $this->total_items;
-		else $this->tv['row_numb_end'] = DBNAV_PAGE_SIZE * $numb_page;
+		else $this->tv['row_numb_end'] = $page_size * $numb_page;
 		
 		$this->tv['size'] = $this->size = $rs->get_record_count();
 		
 		require_once(BASE_CONTROLS_PATH .'paginator.php');
 		$pager_top = new Paginator("{$this->object_id}_top");
 		$pager_top->getpost_var = 'dbnav_'.$this->object_id.'_page';
+		$pager_top->item_on_page = $page_size;
 		$pager_top->total_items = $this->total_items;
 		$pager_top->curr_page = $numb_page;
 		$pager_top->draw_paginator();
 		
 		$pager_bottom = new Paginator("{$this->object_id}_bottom");
 		$pager_bottom->getpost_var = 'dbnav_'.$this->object_id.'_page';
+		$pager_bottom->item_on_page = $page_size;
 		$pager_bottom->total_items = $this->total_items;
 		$pager_bottom->curr_page = $numb_page;
 		$pager_bottom->draw_paginator();
 		
 		$this->title = $this->tv['object_id'] = $object_id;
 		$this->tv['curr_page'] = $this->Application->get_module('Navi')->getUri();
-		$this->row_clickaction = $this->Application->get_module('Navi')->getUri().".{$this->tv['_table']}_edit&id=";
+		$this->tv['row_clickaction'] = $this->Application->get_module('Navi')->getUri().".{$this->tv['_table']}_edit&id=";
 		$this->tv['object_id'] = $this->object_id;
 		$this->tv['sort_fields'] = $this->sort_vars;
 		$this->tv['is_checkable'] = $is_checkable = ((in_array('id', $rs->Fields)));
@@ -212,6 +224,22 @@ class DBNavigator extends CControl
 		}
 		else 
 			$this->tv['dbposition_show'] = false;
+	}
+	
+	function set_table($name)
+	{
+		if(is_string($name) && strlen($name) > 0)
+			$this->tv['_table'] = $name;
+		else 
+			system_die('DBNavigator -> set_table: invalid string value for $name');
+	}
+	
+	function set_row_clickaction($action = "")
+	{
+		if(!is_string($action))
+			system_die('DBNavigator -> set_row_clickaction: invalid string value for $action');
+		else 
+			$this->tv['row_clickaction'] = $action;
 	}
 
 }
