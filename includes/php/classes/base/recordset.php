@@ -1,20 +1,18 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /*
 --------------------------------------------------------------------------------
-Class CRecordSetRow v 1.2
+Class CRecordSetRow v 1.0
 For internal use only
 
 history:
-	v 1.2 - have_field method (VK)
-	v 1.1 - revised (VK)
-	v 1.0 - created (VK)
+	v 1.0 - created (AT)
 --------------------------------------------------------------------------------
 */
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 class CRecordSetRow {
 	var $Fields;
@@ -31,7 +29,7 @@ class CRecordSetRow {
 }
 /*
 --------------------------------------------------------------------------------
-Class CRecordSet v 1.5.2
+Class CRecordSet v 1.0
 Class for sql query result storing and accessing
 
 methods:
@@ -58,21 +56,14 @@ properties:
 	CRecordSetRow[]	Rows					(1.0.0) array of result rows (protected)
 
 history:
-	v 1.5.2 - set_field() added (AD)
-	v 1.5.1 - add_row added (VK)
-	v 1.5.0 - find added (VK)
-	v 1.4.0 - get_2darray added (VK)
-	v 1.3.0 - free method added (VK)
-	v 1.2.0 - added get_record_count(), get_row methods (VK)
-	v 1.1.0 - revised, added first, last, next, prev, fields methods (VK)
-	v 1.0.0 - created (VK)
+	v 1.0.0 - created (AT)
 --------------------------------------------------------------------------------
 */
 define('INSERT_BEGIN', 1);
 define('INSERT_END', 2);
 
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 class CRecordSet
 {

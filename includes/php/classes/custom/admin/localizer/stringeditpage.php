@@ -16,12 +16,18 @@ class CStringEditPage extends CMasterEditPage
 	{
 		$this->IsSecure = true;
 		parent::CMasterEditPage($app, $template);
-		CInput::set_select_data('language_id', $this->Application->Localizer->get_languages(), 'id', 'title');
+		
 	}
 
 	function on_page_init()
 	{
 		parent::on_page_init();
+		
+		$lang_rs = $this->Application->Localizer->get_languages();
+		if($lang_rs == false) $lang_rs = new CRecordSet();
+		CInput::set_select_data('language_id', $lang_rs, 'id', 'title');
+		
+		CValidator::add('language_id', VRT_ENUMERATION, false, $lang_rs, 'id');
 		CValidator::add('name', VRT_TEXT, false, 0, 255);
 		CValidator::add('value', VRT_TEXT, false, 0, 255);
 	}

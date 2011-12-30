@@ -15,8 +15,6 @@ class CMasterEditPage extends CAdminPage
 	{
 		parent::CAdminPage($app, $template);
 		$this->DataBase = &$this->Application->DataBase;
-		$this->Localizer = &$this->Application->Localizer;
-		$this->User = &$this->Application->User;
 	}
 	
 	function on_page_init()
@@ -36,7 +34,7 @@ class CMasterEditPage extends CAdminPage
 		if ($this->id) {
 			if (!$this->_object_rs = $this->is_object_exists($this->id))
 			{
-				$this->tv['_errors'] = $this->Localizer->get_string('object_not_exist');
+				$this->tv['_errors'] = $this->Application->Localizer->get_string('object_not_exist');
 				$this->h_content = '';
 			}
 			else {
@@ -54,7 +52,7 @@ class CMasterEditPage extends CAdminPage
 			if (CValidator::validate_input()) {
 				if ($this->id) {
 					if ($mod->{'update_'.$this->_table}($this->id, $this->tv)) {
-						$this->tv['_info'] = $this->Localizer->get_string('object_updated');
+						$this->tv['_info'] = $this->Application->Localizer->get_string('object_updated');
 						$this->tv['_return_to'] =  $this->Application->Navi->getUri('parent', false);
 					}
 					else {
@@ -63,7 +61,7 @@ class CMasterEditPage extends CAdminPage
 				}
 				else {
 					if ($this->tv['id'] = $mod->{'add_'.$this->_table}($this->tv)) {
-						$this->tv['_info'] = $this->Localizer->get_string('object_added');
+						$this->tv['_info'] = $this->Application->Localizer->get_string('object_added');
 						$this->tv['_return_to'] =  $this->Application->Navi->getUri('parent', false);
 					}
 					else {

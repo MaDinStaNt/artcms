@@ -1,12 +1,12 @@
 <? CForm::begin($_table); ?>
 	<div class="note">
-		<span class="note_title">Warning!</span> Fields marked with <strong>bold</strong> are obligatory
+		<span class="note_title"><? CTemplate::loc_string('warning'); ?>!</span> <? CTemplate::loc_string('fields_marked_with'); ?> <strong><? CTemplate::loc_string('bold'); ?></strong> <? CTemplate::loc_string('has_been_required'); ?>
 	</div>	
 
 	<? if($id): ?>
-		<h2>Localizer String: <? echo $name; ?></h2>
+		<h2><? CTemplate::loc_string('user_role'); ?>: <? echo $title; ?></h2>
 	<? else: ?>
-		<h2>New Localizer String</h2>
+		<h2><? CTemplate::loc_string('new_user_role'); ?></h2>
 	<? endif; ?>
 	
 	<div class="col">

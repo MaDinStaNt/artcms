@@ -1,6 +1,6 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /**
  */
@@ -16,7 +16,6 @@ require_once('validator.php');
 require_once('router.php');
 require_once('session.php');
 require_once('utils.php');
-//require_once('controls/form.php');
 /**
  * Main class for the site, extend CApp from it<br>
  * properties:<br>
@@ -26,14 +25,9 @@ require_once('utils.php');
  * events:<br>
  *         implement on_page_init to declare global controls<br>
  * history:<br>
- *         v 1.3.0 - garbage collector (VK)<br>
- *         v 1.2.2 - HTML/XHTML (VK)<br>
- *         v 1.2.1 - validator support (VK)<br>
- *         v 1.2.0 - events added (VK)<br>
- *         v 1.1.0 - safe module handling (VK)<br>
- *         v 1.0.0 - created (VK)<br>
- * @package LLA.Base
- * @version 1.30
+ *         v 1.0.0 - created (AT)<br>
+ * @package Art-cms
+ * @version 1.0
  */
 class CApplication {
         var $Modules;
@@ -170,6 +164,6 @@ class CApplication {
 
 if (!function_exists('session_start'))
 {
-        system_die('Session module is not installed');
+	system_die('Session module is not installed');
 }
 ?>

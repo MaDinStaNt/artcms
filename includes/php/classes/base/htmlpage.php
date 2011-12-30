@@ -36,7 +36,7 @@ class CHTMLPage extends CObject {
 	
 	function parse_data(){
 		
-		global $RootPath, $ssl_root, $JSPath, $CSSPath, $ImagesPath, $HttpName, $HttpPort, $SHttpName, $SHttpPort, $SiteUrl, $HTTPSSiteUrl;
+		global $RootPath, $ssl_root, $JSPath, $CSSPath, $ImagesPath, $HttpName, $HttpPort, $SHttpName, $SHttpPort, $SiteUrl, $HTTPSSiteUrl, $SiteName;
 		
 		if (intval($HttpPort) != 80)
 			$http_port = ':'.$HttpPort;
@@ -55,6 +55,7 @@ class CHTMLPage extends CObject {
 		else
 			$this->tv['IS_SSL'] = false;
 			
+		$this->tv['SITE_NAME'] = $SiteName;
 		$this->tv['HTTP'] = $HttpName.'://'.$SiteUrl.$http_port.$RootPath;
 		$this->tv['HTTPS'] = $SHttpName.'://'.$HTTPSSiteUrl.$shttp_port.$ssl_root;
 		

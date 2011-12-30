@@ -1,10 +1,7 @@
 <?php
 /*
 --------------------------------------------------------------------------------
-        Navigation Module v0.1
-
-        history:
-                2005-05-31 - created (KVN)
+        Navigation Module v1.0
 
         public methods:
                 analyse_request()

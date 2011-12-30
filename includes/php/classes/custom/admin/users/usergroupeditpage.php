@@ -64,7 +64,7 @@ class CUserGroupEditPage extends CMasterEditPage
 								$this->Application->DataBase->insert_sql('user_group_user_role_link', array('user_group_id' => $this->id, 'user_role_id' => $user_role_id));
 							}
 						}
-						$this->tv['_info'] = $this->Localizer->get_string('object_updated');
+						$this->tv['_info'] = $this->Application->Localizer->get_string('object_updated');
 						$this->tv['_return_info'] =  $this->Application->Navi->getUri('parent', false);
 					}
 					else {
@@ -80,7 +80,7 @@ class CUserGroupEditPage extends CMasterEditPage
 								$this->Application->DataBase->insert_sql('user_group_user_role_link', array('user_group_id' => $this->tv['id'], 'user_role_id' => $user_role_id));
 							}
 						}
-						$this->tv['_info'] = $this->Localizer->get_string('object_added');
+						$this->tv['_info'] = $this->Application->Localizer->get_string('object_added');
 						$this->tv['_return_info'] =  $this->Application->Navi->getUri('parent', false);
 					}
 					else {

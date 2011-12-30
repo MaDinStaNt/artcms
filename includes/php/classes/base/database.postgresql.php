@@ -1,13 +1,13 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /**
  */
 require_once("dbal.php");
 
 /**
- * @package LLA.Base
+ * @package Art-cms
  * @ignore
  * @deprecated should be upgraded to use CBaseDB as parent class
  */

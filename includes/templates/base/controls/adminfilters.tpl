@@ -9,7 +9,7 @@
 						<label for="<? echo $field; ?>_to" class="label sm"><? CTemplate::loc_string("to"); ?> :</label>
 						<? CTemplate::input('text', $field.'_to', 'adminfilter_'.$field.'_to', 'inp inpDate'); ?>
 					<? else: ?>
-						<label for="<? echo $field; ?>" class="label"><? echo $data['title']; ?>:</label> 
+						<label for="adminfilter_<? echo $field; ?>" class="label"><? echo $data['title']; ?>:</label> 
 						<? if ($data['type'] == FILTER_TEXT): ?>
 							<? CTemplate::input('text', 'adminfilter_'.$field, 'adminfilter_'.$field, 'inp'); ?>
 						<? elseif($data['type'] == FILTER_SELECT): ?>

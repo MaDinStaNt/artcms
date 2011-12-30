@@ -31,7 +31,7 @@ define('APPLICATION_DATABASE', 'mysql'); // mysql or mssql
 define('DB_SERVER', 'localhost'); // db server
 define('DB_PORT', '3306'); // db port: 3306 - mysql, 5432 - pgsql, 1433 - mssql
 define('DB_USER', 'root'); // db user name
-define('DB_PASSWORD', ''); // db password
+define('DB_PASSWORD', 'root'); // db password
 define('DB_DATABASE', 'artcms'); // database name, will be created automatically
 define('DB_PREFIX', ''); // prexif for name of the tables in db
 
@@ -46,7 +46,7 @@ $CUrlProxyPassword = ''; // password for proxy server
 
 // server properties
 //$FilePath = str_replace(str_replace('\\', '/', $_SERVER['SCRIPT_NAME']), '', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']));
-//$FilePath = 'c:/sources/php/lla';
+//$FilePath = 'c:/sources/php/art_cms';
 //if (substr($FilePath, -1) != '/')
 //        $FilePath .= '/';
 $FilePath = $_SERVER["DOCUMENT_ROOT"];

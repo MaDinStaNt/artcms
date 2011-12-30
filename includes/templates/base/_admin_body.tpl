@@ -19,8 +19,8 @@
 					});
 				});
 				</script>
-				<div id="hide_panel" class="hand" style="display: block;"><a href="javascript: void(0);" class="hide"><span class="inv">Скрыть Панель</span></a></div>
-				<div id="show_panel" class="hand"><a href="javascript: void(0);" class="show"><span class="inv">Показать Панель</span></a></div>
+				<div id="hide_panel" class="hand" style="display: block;"><a href="javascript: void(0);" class="hide"><span class="inv"><? CTemplate::loc_string('hide_panel'); ?></span></a></div>
+				<div id="show_panel" class="hand"><a href="javascript: void(0);" class="show"><span class="inv"><? CTemplate::loc_string('show_panel'); ?></span></a></div>
 			</td>
 			<td class="overhidd maxh maxw">
 				<div id="body">
@@ -38,7 +38,7 @@
 						<? if($_return_to): ?>
 							<script type="text/javascript">
 							$(function(){
-								setTimeout(function(){window.location = "<? echo $_return_to; ?>"}, 2000);
+								setTimeout(function(){window.location = "<? echo $_return_to; ?>"}, 1500);
 							})
 							</script>
 						<? endif; ?>

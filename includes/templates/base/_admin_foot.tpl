@@ -5,7 +5,7 @@
 	</table>
 	<div id="footer">
 		<div class="right_block tac"><a href="void(0);" title="Read Terms and Conditions">Terms &amp; Conditions</a></div>
-		<span>2011 © Company Ltd.</span>
+		<span><? echo $copyright_year;?> © Company Ltd.</span>
 	</div>
 	<!--<div class="clear">&nbsp;</div>-->
 </div>

@@ -40,7 +40,7 @@ function delete_rp(id)
 </script>
 <div class="col left_block" style="margin-right:35px;">
 	<div class="tree">
-		<h4>Site Name</h4>
+		<h4><? echo $SITE_NAME; ?></h4>
 		<div class="home">&nbsp;</div>
 		<? echo $tree; ?>
 	</div>
@@ -70,47 +70,44 @@ function delete_rp(id)
 					<label for="delete_<? echo $value['path']; ?>" class="widthauto"> - <? CTemplate::loc_string('delete_image'); ?></label>
 				</div>
 			<? endif; ?>
-			<? if(intval($value['type']) !== KEY_TYPE_HTML): ?>
-				<div class="row">
-					<label for="<? echo $value['path']; ?>"><? if($value['required']): ?><strong><? endif; ?><? echo $value['title']; ?>:<? if($value['required']): ?></strong><? endif; ?></label>
-					<? switch ($value['type']): 
-						case KEY_TYPE_CHECKBOX: ?>
-							<? CTemplate::input('checkbox', $value['path'], $value['path'], 'chk'); ?>
-						<? break; ?>
-						<? case KEY_TYPE_TEXT: ?>
+			<div class="row">
+				<label for="<? echo $value['path']; ?>"><? if($value['required']): ?><strong><? endif; ?><? echo $value['title']; ?>:<? if($value['required']): ?></strong><? endif; ?></label>
+				<? switch ($value['type']): 
+					case KEY_TYPE_CHECKBOX: ?>
+						<? CTemplate::input('checkbox', $value['path'], $value['path'], 'chk'); ?>
+					<? break; ?>
+					<? case KEY_TYPE_TEXT: ?>
 							<? CTemplate::input('text', $value['path'], $value['path'], 'inp'); ?>
-						<? break; ?>
-						<? case KEY_TYPE_DATE: ?>
-							<? CTemplate::input('text', $value['path'], $value['path'], 'inp inpDate'); ?>
-							<script type="text/javascript">
-							$(function(){
-								$( "input[name='<? echo $value['path']; ?>']" ).datepicker("setDate", "<? echo ${$value['path']}; ?>");
-							});
-							</script>
-						<? break; ?>
-						<? case KEY_TYPE_FILE: ?>
-							<? CTemplate::input('file', $value['path'], $value['path'], 'inp'); ?>
-						<? break; ?>
+					<? break; ?>
+					<? case KEY_TYPE_DATE: ?>
+						<? CTemplate::input('text', $value['path'], $value['path'], 'inp inpDate'); ?>
+						<script type="text/javascript">
+						$(function(){
+							$( "input[name='<? echo $value['path']; ?>']" ).datepicker("setDate", "<? echo ${$value['path']}; ?>");
+						});
+						</script>
+					<? break; ?>
+					<? case KEY_TYPE_FILE: ?>
+						<? CTemplate::input('file', $value['path'], $value['path'], 'inp'); ?>
+					<? break; ?>
 						<? case KEY_TYPE_IMAGE: ?>
-							<? CTemplate::input('file', $value['path'], $value['path'], 'inp'); ?>
-						<? break; ?>
-						<? case KEY_TYPE_TEXTAREA: ?>
-							<? CTemplate::textarea($value['path'], $value['path'], 'inp'); ?>
-						<? break; ?>
-					<? endswitch; ?>
-			<? else: ?>
-				<div class="row" style="width:631px;">
-					<div class="right_block mgn-lft3"><? CTemplate::textarea($value['path'], $value['path'], 'inp', true); ?></div>
-					<label for="<? echo $value['path']; ?>"><? if($value['required']): ?><strong><? endif; ?><? echo $value['title']; ?>:<? if($value['required']): ?></strong><? endif; ?></label>
-					<div class="clear">&nbsp;</div>
-			<? endif; ?>
-		</div>
+						<? CTemplate::input('file', $value['path'], $value['path'], 'inp'); ?>
+					<? break; ?>
+					<? case KEY_TYPE_TEXTAREA: ?>
+						<? CTemplate::textarea($value['path'], $value['path'], 'inp'); ?>
+					<? break; ?>
+					<? case KEY_TYPE_HTML: ?>
+							<? CTemplate::textarea($value['path'], $value['path'], 'inp', true); ?>
+					<? break; ?>
+				<? endswitch; ?>
+			</div>
 	<? endforeach; ?>
-	
-	<div class="bottom_buttons">
-		<div class="inpwrapper"><? CTemplate::button('save_path', 'save_path', CTemplate::get_loc_string('save'), 'butt'); ?></div>
-		<div class="inpwrapper"><? CTemplate::reset('reset_path', 'reset_path', CTemplate::get_loc_string('reset'), 'butt'); ?></div>
-	</div>
+	<? if(!$butt_hide): ?>
+		<div class="bottom_buttons">
+			<div class="inpwrapper"><? CTemplate::button('save_path', 'save_path', CTemplate::get_loc_string('btn_save'), 'butt'); ?></div>
+			<div class="inpwrapper"><? CTemplate::reset('reset_path', 'reset_path', CTemplate::get_loc_string('btn_reset'), 'butt'); ?></div>
+		</div>
+	<? endif; ?>
 </div>
 <? endif; ?>
 <div class="clear">&nbsp;</div>

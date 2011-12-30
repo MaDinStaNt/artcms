@@ -31,6 +31,7 @@ class CRegistryPage extends CAdminPage
 	function bind_path()
 	{
 		$path_id = $this->tv['path_id'] = (int)InGetPost('path_id', false);
+		$this->tv['butt_hide'] = false;
 		if($path_id)
 		{
 			$path_rs = $this->Application->DataBase->select_custom_sql('
@@ -70,7 +71,11 @@ class CRegistryPage extends CAdminPage
 					$path_rs->next();
 				}
 			}
-			else $this->tv['reg_info'] = $this->Application->Localizer->get_string('values_not_found');
+			else
+			{
+				$this->tv['reg_info'] = $this->Application->Localizer->get_string('values_not_found');
+				$this->tv['butt_hide'] = true;
+			}
 		}
 	}
 	

@@ -1,14 +1,13 @@
 <?
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /*
 --------------------------------------------------------------------------------
-Filesystem functions v 1.0.1
+Filesystem functions v 1.0
 
 history:
-        v 1.0.1 - add dir_copy (AD)
-        v 1.0.0 - created (AD)
+        v 1.0.0 - created (AT)
 --------------------------------------------------------------------------------
 */
 /**

@@ -214,29 +214,14 @@ class CInput{
 		if(is_array($arr)) foreach ($arr as $key => $val) $tv[$name.':select'][$key] = $val;
 		elseif (strcasecmp(get_class($arr), 'CRecordSet') == 0)
 		{
-			while (!$arr->eof())
-			{
-				$tv[$name.':select'][$arr->get_field($id)] = $arr->get_field($text);
-				$arr->next();
-			}
-		}
-	}
-	
-	function set_radio_data($name, $arr, $id='', $text='', &$tv = null)
-	{
-		global $app;
-		if(is_null($tv)) $tv = &$app->tv;
-		
-		$tv[$name.':radio'] = array();
-		
-		if(is_array($arr)) foreach ($arr as $key => $val) $tv[$name.':select'][$key] = $val;
-		elseif (strcasecmp(get_class($arr), 'CRecordSet') == 0)
-		{
-			while (!$arr->eof())
-			{
-				$tv[$name.':radio'][$arr->get_field($id)] = $arr->get_field($text);
-				$arr->next();
-			}
+			if($arr !== false && !$arr->eof())
+				while (!$arr->eof())
+				{
+					$tv[$name.':select'][$arr->get_field($id)] = $arr->get_field($text);
+					$arr->next();
+				}
+			else 
+				$tv[$name.':select'][''] = $GLOBALS['app']->Localizer->get_string('internal_error');
 		}
 	}
 }

@@ -1,12 +1,10 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /*
 history:
-	v 1.0.2 - bug with boolean values fixed (VK)
-	v 1.0.1 - internalLikeEscape (VK)
-	v 1.0.0 - created (VK)
+	v 1.0.0 - created (AT)
 --------------------------------------------------------------------------------
 */
 /**
@@ -14,8 +12,8 @@ history:
 require_once('recordset.php');
 
 /**
- * @package LLA.Base
- * @version 1.0.2
+ * @package Art-cms
+ * @version 1.0
  */
 class CBaseDB
 {

@@ -132,7 +132,7 @@ class CPathEditPage extends CMasterEditPage
 				if (CValidator::validate_input()) {
 					if ($this->id) {
 						if ($this->Registry->update_path($this->id, $this->tv)) {
-							$this->tv['_info'] = $this->Localizer->get_string('object_updated');
+							$this->tv['_info'] = $this->Application->Localizer->get_string('object_updated');
 						}
 						else {
 							$this->tv['_errors'] = $this->Registry->get_last_error();
@@ -140,7 +140,7 @@ class CPathEditPage extends CMasterEditPage
 					}
 					else {
 						if ($this->tv['id'] = $this->Registry->add_path($this->tv)) {
-							$this->tv['_info'] = $this->Localizer->get_string('object_added');
+							$this->tv['_info'] = $this->Application->Localizer->get_string('object_added');
 							$this->tv['_return_to'] =  $this->Application->Navi->getUri().'&id='.$this->tv['id'];
 						}
 						else {

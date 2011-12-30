@@ -1,6 +1,6 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /**
  */
@@ -8,7 +8,7 @@ require_once('_db.php');
 
 /**
 --------------------------------------------------------------------------------
-Class CDataBase v 1.1.2
+Class CDataBase v 1.0
 MySQL DataBase class
 Use this class through the $Application member of CHTMLPage class, ie:
         $this->Application->DataBase->method_name();
@@ -38,25 +38,9 @@ main methods:
         free(handle) - frees used handle
 
 history:
-        v 1.1.2 - mysql_real_escape, internalLikeEscape (VK)
-        v 1.1.1 - Module Checking (VK)
-        v 1.1.0 - CBaseDB (VK)
-        v 1.0.5        - allow to use $this->DB_PREFIX (if set) instead of DB_PREFIX
-                             $this->DB_SERVER (if set) instead of DB_SERVER
-              $this->DB_USER (if set) instead of DB_USER
-              $this->DB_PASSWORD (if set) instead of DB_PASSWORD
-              $this->DB_DATABASE (if set) instead of DB_DATABASE
-              when use 2 or more database dont forget
-              select database before run SQL in different database
-              (mysql_select_db(DB_DATABASE, $this->DataBase->LinkID);) (AD)
-        v 1.0.4        - new arg $limit in get_sql & select_custom_sql
-                          allow integer (rows number) OR array(page,items) (AD)
-        v 1.0.3        - get_sql TableName argument can be SQL ( SELECT ... FROM ...)  (AD)
-        v 1.0.2        - free method added (VK)
-        v 1.0.1 - fixed CApplication support (VK)
-        v 1.0.0 - created (VK)
+        v 1.0.0 - created (AT)
 --------------------------------------------------------------------------------
- * @package LLA.Base
+ * @package Art-cms
  * @ignore
  */
 class CDataBase extends CBaseDB

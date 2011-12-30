@@ -21,7 +21,7 @@ class CUsersPage extends CMasterPage
 		$this->IsSecure = true;
 		parent::CMasterPage($app, $template);
 		$this->DataBase = &$this->Application->DataBase;
-		$roles_rs = $this->User->get_user_roles();
+		$roles_rs = $this->Application->User->get_user_roles();
 		$roles_rs->add_row(array('id' => '', 'title' => $this->Application->Localizer->get_string('any')), INSERT_BEGIN);
 	    $this->_filters = array(
 	    	'm#name' => array(
@@ -81,32 +81,32 @@ class CUsersPage extends CMasterPage
             WHERE ".$this->_where."";
 		
         require_once(BASE_CLASSES_PATH . 'controls/dbnavigator.php');
-        $nav = new DBNavigator('users', $query, array('status', 'company', 'name', 'email'), 'id');
+        $nav = new DBNavigator('user', $query, array('status', 'company', 'name', 'email'), 'id');
         $nav->title = 'Users List';
         
         $header_num = $nav->add_header('status');
-        $nav->headers[$header_num]->set_title('status');
+        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string('status'));
         $nav->headers[$header_num]->set_align( "center");
         
         $header_num = $nav->add_header('name');
-        $nav->headers[$header_num]->set_title('Name');
+        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string('name'));
         $nav->headers[$header_num]->set_width( "20%");
         
         $header_num = $nav->add_header('company');
-        $nav->headers[$header_num]->set_title('Company');
+        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string('company'));
         $nav->headers[$header_num]->set_width( "20%");
         
         $header_num = $nav->add_header('email');
-        $nav->headers[$header_num]->set_title('email');
+        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string('email'));
         $nav->headers[$header_num]->set_width( "20%");
         $nav->headers[$header_num]->set_mail(true);
         
         $header_num = $nav->add_header('user_role');
-        $nav->headers[$header_num]->set_title('User Role');
+        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string('user_role_id'));
         $nav->headers[$header_num]->set_width( "20%");
         
         $header_num = $nav->add_header('create_date_formatted');
-        $nav->headers[$header_num]->set_title('Create Date');
+        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string('create_date'));
         $nav->headers[$header_num]->set_width( "20%");
         
         if($nav->size > 0)

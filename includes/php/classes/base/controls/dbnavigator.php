@@ -1,6 +1,6 @@
 <?php
 require_once('control.php');
-if(!defined('DBNAV_PAGE_SIZE')) define('DBNAV_PAGE_SIZE', 10);
+
 class DBNavigator extends CControl
 {
 	public $name;

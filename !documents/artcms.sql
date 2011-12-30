@@ -39,7 +39,7 @@ CREATE TABLE `image` (
   `system_key` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `image_size` table : 
@@ -57,7 +57,7 @@ CREATE TABLE `image_size` (
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`),
   CONSTRAINT `image_size_fk` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `loc_lang` table : 
@@ -86,7 +86,7 @@ CREATE TABLE `loc_string` (
   PRIMARY KEY (`id`),
   KEY `language_id` (`language_id`),
   CONSTRAINT `loc_string_fk` FOREIGN KEY (`language_id`) REFERENCES `loc_lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_path` table : 
@@ -103,7 +103,7 @@ CREATE TABLE `registry_path` (
   PRIMARY KEY (`id`),
   KEY `language_id` (`language_id`),
   CONSTRAINT `registry_path_fk` FOREIGN KEY (`language_id`) REFERENCES `loc_lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_value` table : 
@@ -122,7 +122,7 @@ CREATE TABLE `registry_value` (
   PRIMARY KEY (`id`),
   KEY `path_id` (`path_id`),
   CONSTRAINT `registry_value_fk` FOREIGN KEY (`path_id`) REFERENCES `registry_path` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_meta` table : 
@@ -181,7 +181,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `email` (`email`),
   KEY `id_level` (`user_role_id`),
   KEY `state_id` (`state_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `user_role` table : 
@@ -453,22 +453,6 @@ INSERT INTO `country` (`id`, `title`, `abbreviation`, `phone_code`, `tmp`) VALUE
 COMMIT;
 
 #
-# Data for the `image` table  (LIMIT 0,500)
-#
-
-INSERT INTO `image` (`id`, `title`, `system_key`, `path`) VALUES 
-  (1,'test','test','pub/prod/');
-COMMIT;
-
-#
-# Data for the `image_size` table  (LIMIT 0,500)
-#
-
-INSERT INTO `image_size` (`id`, `image_id`, `system_key`, `image_width`, `image_height`, `thumbnail_method`) VALUES 
-  (1,1,'50x50',50,50,0);
-COMMIT;
-
-#
 # Data for the `loc_lang` table  (LIMIT 0,500)
 #
 
@@ -481,108 +465,160 @@ COMMIT;
 #
 
 INSERT INTO `loc_string` (`id`, `language_id`, `name`, `value`) VALUES 
-  (1,1,'hello','привет'),
-  (3,1,'privet','privet'),
   (4,1,'button','button'),
-  (5,1,'login','login'),
-  (6,1,'login_no_such_user','login_no_such_user'),
+  (5,1,'login','Login'),
+  (6,1,'login_no_such_user','Login no such user'),
   (7,1,'validator_valid_value','Please enter a valid value in %1$s field.'),
   (8,1,'validator_empty_string','Please enter a value in %1$s field.'),
-  (9,1,'any','any'),
-  (10,1,'name','name'),
-  (11,1,'company','company'),
-  (12,1,'email','email'),
-  (13,1,'user_role_id','user_role_id'),
-  (14,1,'create_date_from','create_date_from'),
-  (15,1,'last_login_from','last_login_from'),
-  (16,1,'click_for_sort','click_for_sort'),
-  (17,1,'click_for_send_message','click_for_send_message'),
-  (18,1,'go_to','go_to'),
-  (19,1,'page','page'),
-  (20,1,'nav_empty_message','nav_empty_message'),
-  (21,1,'delete_selected','delete_selected'),
-  (22,1,'add','add'),
+  (9,1,'any','Any'),
+  (10,1,'name','Name'),
+  (11,1,'company','Company'),
+  (12,1,'email','E-mail'),
+  (13,1,'user_role_id','User Role'),
+  (14,1,'create_date_from','Create date from'),
+  (15,1,'last_login_from','Last Login from'),
+  (16,1,'click_for_sort','Click for sort'),
+  (17,1,'click_for_send_message','Click for send Message'),
+  (18,1,'go_to','Go to'),
+  (19,1,'page','Page'),
+  (20,1,'nav_empty_message','Records not found'),
+  (21,1,'delete_selected','Delete selected'),
+  (22,1,'add','Add'),
   (23,1,'to','to'),
-  (24,1,'clear','clear'),
-  (25,1,'filter','filter'),
-  (26,1,'language','language'),
-  (27,1,'value','value'),
-  (28,1,'active','active'),
-  (29,1,'inactive','inactive'),
-  (30,1,'suspended','suspended'),
-  (31,1,'password','password'),
-  (32,1,'address','address'),
-  (33,1,'city','city'),
-  (34,1,'state','state'),
-  (35,1,'state_id','state_id'),
-  (36,1,'zip','zip'),
-  (37,1,'status','status'),
-  (38,1,'save','save'),
-  (39,1,'reset','reset'),
+  (24,1,'clear','Clear'),
+  (25,1,'filter','Filter'),
+  (26,1,'language','Language'),
+  (27,1,'value','Value'),
+  (28,1,'active','Active'),
+  (29,1,'inactive','Inactive'),
+  (30,1,'suspended','Suspended'),
+  (31,1,'password','Password'),
+  (32,1,'address','Address'),
+  (33,1,'city','City'),
+  (34,1,'state','State'),
+  (35,1,'state_id','State'),
+  (36,1,'zip','ZIP'),
+  (37,1,'status','Status'),
   (40,1,'close','close'),
   (41,1,'validator_min_length','Please enter at least %2$d characters in %1$s field.'),
-  (42,1,'object_updated','object_updated'),
-  (43,1,'language_id','language_id'),
-  (44,1,'test','тест'),
-  (45,1,'object_added','object_added'),
-  (46,1,'title','title'),
-  (47,1,'abbreviation','abbreviation'),
-  (48,1,'description','description'),
-  (49,1,'id','id'),
-  (50,1,'id#m_id','id#m_id'),
-  (51,1,'validator_min_value','validator_min_value'),
+  (42,1,'object_updated','Object updated'),
+  (43,1,'language_id','Language'),
+  (45,1,'object_added','Object added'),
+  (46,1,'title','Title'),
+  (47,1,'abbreviation','Abbreviation'),
+  (48,1,'description','Description'),
+  (49,1,'id','ID'),
+  (51,1,'validator_min_value','Minimum value of %2$d for %1$d field'),
   (52,1,'id#role_id','ID'),
-  (53,1,'btn_save','btn_save'),
-  (54,1,'btn_reset','btn_reset'),
-  (55,1,'btn_close','btn_close'),
-  (56,1,'objects_deleted','objects_deleted'),
-  (57,1,'system_key','system_key'),
-  (58,1,'path','path'),
-  (59,1,'system_key_exists','system_key_exists'),
-  (60,1,'image_width','image_width'),
-  (61,1,'image_height','image_height'),
-  (62,1,'thumbnail_method','thumbnail_method'),
-  (63,1,'welcome_to_admin_panel','welcome_to_admin_panel'),
-  (64,1,'parent_id','parent_id'),
-  (65,1,'path_fields','path_fields'),
-  (66,1,'path_id','path_id'),
-  (67,1,'text','text'),
-  (68,1,'textarea','textarea'),
-  (69,1,'htmlarea','htmlarea'),
-  (70,1,'file','file'),
-  (71,1,'date','date'),
-  (72,1,'number','number'),
-  (73,1,'custom_file','custom_file'),
-  (74,1,'image_file','image_file'),
-  (75,1,'type','type'),
-  (76,1,'required','required'),
-  (77,1,'valid_type','valid_type'),
-  (78,1,'unique_error_mess','unique_error_mess'),
-  (79,1,'valid_add_info1','valid_add_info1'),
-  (80,1,'valid_add_info2','valid_add_info2'),
-  (81,1,'valid_add_info3','valid_add_info3'),
-  (82,1,'checkbox','checkbox'),
-  (83,1,'object_exists','object_exists'),
-  (84,1,'database_error','database_error'),
-  (85,1,'noitem_selected','noitem_selected'),
-  (86,1,'internal_error','internal_error'),
-  (87,1,'goto','goto'),
-  (88,1,'values_not_found;','values_not_found;'),
-  (89,1,'values_not_found','values_not_found'),
-  (90,1,'validator_invalid_file','validator_invalid_file'),
-  (91,1,'image','image'),
-  (92,1,'odbcdate','odbcdate'),
-  (93,1,'download','download'),
-  (94,1,'delete_image','delete_image'),
-  (95,1,'you_logged_as','you_logged_as'),
-  (96,1,'settings','settings'),
-  (97,1,'are_you_sure_you_want_to_logout','are_you_sure_you_want_to_logout'),
-  (98,1,'logout','logout'),
+  (53,1,'btn_save','Save'),
+  (54,1,'btn_reset','Reset'),
+  (55,1,'btn_close','Close'),
+  (56,1,'objects_deleted','Objects deleted'),
+  (57,1,'system_key','System key'),
+  (58,1,'path','Path'),
+  (59,1,'system_key_exists','System key exists'),
+  (62,1,'thumbnail_method','Thumbnail Method'),
+  (63,1,'welcome_to_admin_panel','Welcome to Administation Panel'),
+  (64,1,'parent_id','Parent'),
+  (65,1,'path_fields','Path fields'),
+  (66,1,'path_id','Path'),
+  (67,1,'text','Text'),
+  (68,1,'textarea','Textarea'),
+  (69,1,'htmlarea','Htmlarea'),
+  (70,1,'file','File'),
+  (71,1,'date','Date'),
+  (72,1,'number','Number'),
+  (73,1,'custom_file','Custom File'),
+  (74,1,'image_file','Image file'),
+  (75,1,'type','Type'),
+  (76,1,'required','Required'),
+  (77,1,'valid_type','Validator Type'),
+  (78,1,'unique_error_mess','Unique Error Message'),
+  (79,1,'valid_add_info1','Add Info 1'),
+  (80,1,'valid_add_info2','Add Info 2'),
+  (81,1,'valid_add_info3','Add Info 3'),
+  (82,1,'checkbox','Checkbox'),
+  (83,1,'object_exists','Object exists'),
+  (84,1,'database_error','Database Error. Please back later.'),
+  (85,1,'noitem_selected','No items selected'),
+  (86,1,'internal_error','Internal error. May be the server is overloaded, try later.'),
+  (87,1,'goto','Go to'),
+  (89,1,'values_not_found','Values not found'),
+  (90,1,'validator_invalid_file','Please upload only valid file formats (%2$s) for the %1$s field'),
+  (91,1,'image','Image'),
+  (92,1,'odbcdate','ODBC Date'),
+  (93,1,'download','Download'),
+  (94,1,'delete_image','Delete Image'),
+  (95,1,'you_logged_as','You logged as'),
+  (96,1,'settings','Settings'),
+  (97,1,'are_you_sure_you_want_to_logout','Are you sure what you want to logout'),
+  (98,1,'logout','Logout'),
   (99,1,'total','total'),
   (100,1,'displaying','displaying'),
-  (101,1,'object_not_exist','object_not_exist'),
-  (102,1,'page_not_found','page_not_found'),
-  (103,1,'the_requested_page_does_not_exist','the_requested_page_does_not_exist');
+  (101,1,'object_not_exist','Object not exist'),
+  (102,1,'page_not_found','Page not found'),
+  (103,1,'the_requested_page_does_not_exist','Sorry! The requested page does not exist'),
+  (104,1,'pages_not_found','Pages not found'),
+  (105,1,'warning','Warning'),
+  (106,1,'fields_marked_with','Fields market with'),
+  (107,1,'bold','bold'),
+  (108,1,'has_been_required','has been required'),
+  (109,1,'validator_max_value','Maximum value of %2$d for %1$d field'),
+  (110,1,'new_image','New Image'),
+  (111,1,'dbnav_size_show','Show'),
+  (112,1,'dbnav_size_items','Items on page'),
+  (113,1,'image_width','Image width'),
+  (114,1,'image_height','Image height'),
+  (115,1,'administator_panel','Administator Panel'),
+  (116,1,'remember_me','Remember me'),
+  (117,1,'width','Width'),
+  (118,1,'height','Height'),
+  (119,1,'registry_is_empty','Registry is empty'),
+  (120,1,'hide_panel','hide panel'),
+  (121,1,'show_panel','show panel'),
+  (122,1,'create_date','Create Date'),
+  (123,1,'user','User'),
+  (124,1,'localizer_string','Localizer String'),
+  (125,1,'new_localizer_string','New Localizer String'),
+  (126,1,'new_user','New User'),
+  (127,1,'user_role','user_role'),
+  (128,1,'id#role','User Role'),
+  (129,1,'new_language','New Language'),
+  (130,1,'new_path','New Path'),
+  (131,1,'new_value','new_value'),
+  (132,1,'validator_field_path_id','Path'),
+  (133,1,'validator_field_type','Type'),
+  (134,1,'validator_field_path','Path'),
+  (135,1,'validator_field_title','Title'),
+  (136,1,'validator_field_value','Value'),
+  (137,1,'validator_field_valid_type','Valid Type'),
+  (138,1,'validator_field_valid_add_info1','Add Info 1'),
+  (139,1,'validator_field_valid_add_info2','Add Info 2'),
+  (140,1,'validator_field_valid_add_info3','Add Info 3'),
+  (141,1,'validator_field_language_id','Language'),
+  (142,1,'validator_field_parent_id','Parent'),
+  (143,1,'validator_field_system_key','System key'),
+  (144,1,'new_image_size','New Image Size'),
+  (145,1,'validator_field_image_width','Image width'),
+  (146,1,'validator_field_image_height','Image height'),
+  (147,1,'validator_field_thumbnail_method','Thumbnail Method'),
+  (148,1,'image_size','image_size'),
+  (149,1,'validator_field_name','Name'),
+  (150,1,'validator_field_email','E-mail'),
+  (151,1,'validator_field_password','Password'),
+  (152,1,'validator_field_address','Address'),
+  (153,1,'validator_field_city','City'),
+  (154,1,'validator_field_state_id','State'),
+  (155,1,'validator_field_zip','ZIP'),
+  (156,1,'new_user_role','new_user_role'),
+  (157,1,'validator_field_id','ID'),
+  (158,1,'validator_field_description','Description'),
+  (159,1,'validator_field_user_role_id','User Role'),
+  (160,1,'validator_invalid_enumeration_value','Please select value from %1$s list'),
+  (161,1,'validator_field_status','Status'),
+  (163,1,'validator_field_abbreviation','Abbreviation'),
+  (165,1,'validator_cannot_read_file','Cannot read file from %1$s field'),
+  (167,1,'items_on_page','Items on Page');
 COMMIT;
 
 #
@@ -590,8 +626,7 @@ COMMIT;
 #
 
 INSERT INTO `registry_path` (`id`, `parent_id`, `language_id`, `path`, `title`) VALUES 
-  (2,-1,1,'_depth_tree','Depth of the Registry tree'),
-  (58,0,1,'_mailing','Mailing System');
+  (2,-1,1,'_depth_tree','Depth of the Registry tree');
 COMMIT;
 
 #
@@ -599,24 +634,7 @@ COMMIT;
 #
 
 INSERT INTO `registry_value` (`id`, `path_id`, `path`, `type`, `required`, `title`, `value`) VALUES 
-  (1,58,'_enable',6,0,'Enable','1'),
-  (2,2,'_count',1,0,'Count','1'),
-  (3,58,'title',1,1,'Название','привет'),
-  (4,58,'description',2,0,'описание','тестовое описание'),
-  (5,58,'htmlarea',3,0,'htmlarea','<p><strong>hi</strong></p>'),
-  (6,58,'file',7,0,'файл','x_d8fca5b2.jpg'),
-  (7,58,'date',5,0,'дата','2011-09-22');
-COMMIT;
-
-#
-# Data for the `registry_meta` table  (LIMIT 0,500)
-#
-
-INSERT INTO `registry_meta` (`value_id`, `type`, `unique_error_mess`, `add_info1`, `add_info2`, `add_info3`) VALUES 
-  (3,9,0,'0','255',''),
-  (4,9,0,'','',''),
-  (5,9,0,'','',''),
-  (6,7,0,'','','');
+  (2,2,'_count',1,0,'Count','1');
 COMMIT;
 
 #
@@ -4301,7 +4319,7 @@ COMMIT;
 #
 
 INSERT INTO `user` (`id`, `user_role_id`, `status`, `email`, `password`, `name`, `company`, `address`, `city`, `state_id`, `zip`, `create_date`, `last_login_date`) VALUES 
-  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2011-10-14 13:16:43');
+  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2011-12-30 04:07:03');
 COMMIT;
 
 #

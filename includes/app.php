@@ -2,7 +2,6 @@
 require_once('config/_config.inc.php');
 require_once(FUNCTION_PATH . 'functions.php');
 require_once(BASE_CLASSES_PATH . 'application.php');
-//require_once(BASE_CLASSES_PATH . 'firsthtmlpage.php'); 
 
 define('OBJECT_ACTIVE', 1);
 define('OBJECT_NOT_ACTIVE', 0);

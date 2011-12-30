@@ -51,13 +51,7 @@ class CLocalizer {
 				if($rs !== false && !$rs->eof()) $value = $rs->get_field('value');
 				else
 				{
-					$lang_rs = $this->get_languages();
-					if($lang_rs){
-						while (!$lang_rs->eof()){
-							$this->DataBase->insert_sql('loc_string', array('language_id' => $lang_rs->get_field('id'), 'name' => $name, 'value' => $name));
-							$lang_rs->next();
-						}
-					}
+					$this->DataBase->insert_sql('loc_string', array('language_id' => $lang_id, 'name' => $name, 'value' => $name));
 					return $name;
 				}
 			}

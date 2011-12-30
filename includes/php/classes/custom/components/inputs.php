@@ -11,7 +11,6 @@ class CInputs
 		$this->Application = &$app;
 		$this->tv = &$app->tv;
 		$this->DataBase = &$this->Application->DataBase;
-		$this->Localizer = $this->Application->Localizer;
 	}
 
 	function get_last_error()
@@ -27,11 +26,11 @@ class CInputs
 		else
 		$cnt_rs = $this->DataBase->select_custom_sql("SELECT count(id) as cnt FROM {$table} WHERE uri='{$uri}' AND parent_id = {$parent_id}");
 		if($cnt_rs === false){
-			return  array('errors' => $this->Localizer->get_string('internal_error'));
+			return  array('errors' => $this->Application->Localizer->get_string('internal_error'));
 		}
 
 		if($cnt_rs->get_field('cnt') > 0){
-			return  array('errors' => $this->Localizer->get_string('object_or_uri_exists'));
+			return  array('errors' => $this->Application->Localizer->get_string('object_or_uri_exists'));
 		}
 
 		return array('uri' => $uri, 'errors' => false);

@@ -1,4 +1,5 @@
 <ul class="paginator dbnavsize">
+	<li><? CTemplate::loc_string('items_on_page'); ?>:</li>
 	<? foreach ($sizes as $s): ?>
 		 <? if($s == $size_act): ?>
 			<li class="act"><span><? echo $s; ?></span></li>

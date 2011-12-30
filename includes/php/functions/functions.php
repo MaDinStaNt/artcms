@@ -1,6 +1,6 @@
 <?
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /**
  */

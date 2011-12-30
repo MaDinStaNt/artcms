@@ -11,7 +11,6 @@
 	<script type="text/javascript" src="<? echo $JS; ?>jquery/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="<? echo $JS; ?>jquery/admin.ui/jquery-ui-1.8.15.custom.min.js"></script>
 	<script type="text/javascript" src="<? echo $JS; ?>interface.js"></script>
-	<script type="text/javascript" src="<? echo $JS; ?>interface.js"></script>
 	<script type="text/javascript" src="<? echo $JS; ?>ajax-connector.js"></script>
 	<script type="text/javascript" src="<? echo $JS; ?>observer.js"></script>
 	<script type="text/javascript">

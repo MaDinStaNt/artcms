@@ -15,7 +15,7 @@ class CRolesPage extends CMasterPage
      *
      * @var array
      */
-    protected $_columns_arr = array('title', 'description', 'id#role_id');
+    protected $_columns_arr = array('Title', 'Description', 'id#Role');
 
     function CRolesPage(&$app, $template)
 	{

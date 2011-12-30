@@ -1,13 +1,13 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /**
  */
 require_once('debuginfo.php');
 /**
  * Base class for all objects, allows access to $this->DebugInfo object
- * @package LLA.Base
+ * @package Art-cms
  */
 class CObject {
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package PACATUM.Base
+ * @package Art-cms
  */
 if (!defined('__GLOBAL_DEBUG_INFO_INCLUDED')) {
 /**
@@ -10,8 +10,8 @@ if (!defined('__GLOBAL_DEBUG_INFO_INCLUDED')) {
  *
  * history:<br>
  *
- * @package PACATUM.Base
- * @version 1.0.1
+ * @package Art-cms
+ * @version 1.0
  */
 class CDebugInfo {
         /**

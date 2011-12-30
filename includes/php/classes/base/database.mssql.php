@@ -1,10 +1,10 @@
 <?php
 /**
- * @package LLA.Base
+ * @package Art-cms
  */
 /*
 --------------------------------------------------------------------------------
-Class CDataBase v 1.0.2
+Class CDataBase v 1.0
 MS SQL DataBase class
 Use this class through the $Application member of CHTMLPage class, ie:
 	$this->Application->DataBase->method_name();
@@ -34,9 +34,7 @@ main methods:
 	free(handle) - frees used handle
 
 history:
-	v 1.0.2 - internalLikeEscape (VK)
-	v 1.0.1 - Module Checking (VK)
-	v 1.0.0 - created (VK)
+	v 1.0.0 - created (AT)
 --------------------------------------------------------------------------------
 */
 
@@ -46,7 +44,7 @@ require_once('_db.php');
 require_once('recordset.php');
 
 /**
- * @package LLA.Base
+ * @package Art-cms
  * @ignore
  */
 class CDataBase extends CBaseDB

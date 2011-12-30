@@ -42,9 +42,6 @@ class CMasterPage extends CAdminPage
 	{
 		parent::CAdminPage($app, $template);
 		$this->DataBase = &$this->Application->DataBase;
-		$this->Localizer = &$this->Application->Localizer;
-		$this->User = &$this->Application->User;
-		$this->template_vars = &$app->template_vars;
 	}
 	
 	function on_page_init()
@@ -110,8 +107,8 @@ class CMasterPage extends CAdminPage
         		$header_num = $nav->add_header($fields[1]);
         	}
 	        else $header_num = $nav->add_header($field);
-	        $nav->headers[$header_num]->set_title = $this->Application->Localizer->get_string($field);
-	        $nav->headers[$header_num]->set_width = "{$column_width}%";
+	        $nav->headers[$header_num]->set_title($this->Application->Localizer->get_string($field));
+	        $nav->headers[$header_num]->set_width("{$column_width}%");
         }
 
         $this->tv['clickLink'] = $this->Application->Navi->getUri('./'.$this->_table.'_edit/', true);

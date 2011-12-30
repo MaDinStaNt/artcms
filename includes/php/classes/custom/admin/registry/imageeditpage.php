@@ -93,7 +93,7 @@ class CImageEditPage extends CMasterEditPage
 				if (CValidator::validate_input()) {
 					if ($this->id) {
 						if ($this->Images->update_image($this->id, $this->tv)) {
-							$this->tv['_info'] = $this->Localizer->get_string('object_updated');
+							$this->tv['_info'] = $this->Application->Localizer->get_string('object_updated');
 							//$this->tv['_return_to'] =  $this->Application->Navi->getUri('parent', false);
 						}
 						else {
@@ -102,7 +102,7 @@ class CImageEditPage extends CMasterEditPage
 					}
 					else {
 						if ($this->tv['id'] = $this->Images->add_image($this->tv)) {
-							$this->tv['_info'] = $this->Localizer->get_string('object_added');
+							$this->tv['_info'] = $this->Application->Localizer->get_string('object_added');
 							$this->tv['_return_to'] =  $this->Application->Navi->getUri('this').'&id='.$this->tv['id'];
 						}
 						else {

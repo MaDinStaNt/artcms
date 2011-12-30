@@ -1,12 +1,12 @@
 <? CForm::begin('registry_path'); ?>
 	<div class="note">
-		<span class="note_title">Warning!</span> Fields marked with <strong>bold</strong> are obligatory
+		<span class="note_title"><? CTemplate::loc_string('warning'); ?>!</span> <? CTemplate::loc_string('fields_marked_with'); ?> <strong><? CTemplate::loc_string('bold'); ?></strong> <? CTemplate::loc_string('has_been_required'); ?>
 	</div>	
 
 	<? if($id): ?>
-		<h2>Path: <? echo $title; ?></h2>
+		<h2><? CTemplate::loc_string('path'); ?>: <? echo $title; ?></h2>
 	<? else: ?>
-		<h2>New Path</h2>
+		<h2><? CTemplate::loc_string('new_path'); ?></h2>
 	<? endif; ?>
 	
 	<script type="text/javascript" language="javascript" src="<? echo $JS; ?>jquery/jquery.cookie.js"></script>
