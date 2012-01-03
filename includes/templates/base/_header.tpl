@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<? echo $CSS ?>core.css" type="text/css" />
     <!--[if IE 6]><link rel="stylesheet" href="<? echo $JS ?>ie6.css" media="all" /><![endif]-->
 	<!--[if IE 7]><link rel="stylesheet" href="<? echo $JS ?>ie7.css" media="all" /><![endif]-->
-    <script type="text/javascript" language="javascript" src="<? echo $JS ?>jquery/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<? echo $JS ?>jquery/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" language="javascript" src="<? echo $JS ?>ajax-connector.js"></script>
 	<script type="text/javascript" language="javascript" src="<? echo $JS ?>observer.js"></script>
     <script type="text/javascript" language="javascript" src="<? echo $JS ?>interface.js"></script>

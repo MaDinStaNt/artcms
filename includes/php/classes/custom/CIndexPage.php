@@ -17,8 +17,18 @@ class CIndexPage extends CFrontPage {
 		
 		if(!parent::parse_data())
 			return false;
-		
+			
 		return true;
+	}
+	
+	function load_ajax_validator($field)
+	{
+		switch ($field)
+		{
+			case 'ajax_test':
+				CValidator::add('ajax_test', VRT_TEXT, false, 3, 10);
+			break;
+		}
 	}
 };
 ?>

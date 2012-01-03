@@ -148,8 +148,8 @@ class CTemplate {
 
 class CForm{
 	
-	function begin($id, $method = 'POST', $action = '', $enctype = '' ){
-		global $formname;
+	function begin($id, $method = 'POST', $action = '', $enctype = '', $class = '', $ajaxValidator = false){
+		global $formname, $app;
 		if(strlen($formname) > 0) system_die('opening form tag can not be used because the previous form is not closed');
 		else 
 		{
@@ -171,9 +171,12 @@ class CForm{
 				}
 				//-->
 				</script>";
-			echo "<form id=\"{$id}\" method=\"{$method}\" action=\"{$action}\"".((strlen($enctype) > 0) ? " enctype=\"{$enctype}\"" : null).">";
+			echo "<form id=\"{$id}\" method=\"{$method}\" action=\"{$action}\"".((strlen($enctype) > 0) ? " enctype=\"{$enctype}\"" : null)." class=\"".((strlen($class) > 0) ? "{$class}" : null).(($ajaxValidator === true) ? " ajax_validation" : null)."\">";
 			echo "<input type=\"hidden\" name=\"formname\" value=\"{$id}\" />";
 			echo "<input type=\"hidden\" name=\"param2\" value=\"\" /><input type=\"hidden\" name=\"param1\" value=\"\" />";
+			if($ajaxValidator === true && $page_class = get_class($app->CurrentPage))
+				echo "<input type=\"hidden\" id=\"page_class\" name=\"page_class\" value=\"{$page_class}\" />"; 
+			
 		}
 	}
 	

@@ -1,4 +1,5 @@
 <?php
+global $ajaxValidator;
 $router = $app->get_module('Router');
 $router->add_route('/', 'CIndexPage', 'CIndexPage.php', 'indexpage.tpl');
 $router->add_route('/index.html', 'CIndexPage', 'CIndexPage.php', 'indexpage.tpl');
@@ -11,7 +12,7 @@ if (!is_null($page)) {
 	$page->parse_state();
 	$page->output_page();
 }
-else {
+elseif(!$ajaxValidator) {
 	@header('HTTP/1.0 302 Moved Temporarily');
 	@header('Status: 302 Moved Temporarily');
 	@header('Location: http://'.$_SERVER['SERVER_NAME'].'/page-not-found.html');

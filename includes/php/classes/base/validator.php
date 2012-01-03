@@ -414,7 +414,7 @@ class CValidatorMeta{
 				}
 				if ( (intval($_FILES[$this->name]['error']) != 0) && (intval($_FILES[$this->name]['error']) != 4) )
 				{
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file_'.$this->name, $this->display_name);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file_'.$this->name, $this->display_name);
 					$this->last_check = false;
 					return false;
 				}
@@ -453,7 +453,7 @@ class CValidatorMeta{
 
 		if ( (!is_array($value)) && (strlen($value)==0) )
 		{
-			$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_empty_string', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_empty_string_'.$this->name, $this->display_name);
+			$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_empty_string', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_empty_string_'.$this->name, $this->display_name);
 			$this->last_check = false;
 			return false;
 		}
@@ -461,7 +461,7 @@ class CValidatorMeta{
 		if ($this->min_length > 0)
 			if (mb_strlen($value, 'UTF-8') < $this->min_length)
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_length', $this->display_name, $this->min_length) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_length_'.$this->name, $this->display_name, $this->min_length);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_length', $this->display_name, $this->min_length) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_length_'.$this->name, $this->display_name, $this->min_length);
 				$this->last_check = false;
 				return false;
 			}
@@ -469,7 +469,7 @@ class CValidatorMeta{
 		if ($this->max_length > 0)
 			if (mb_strlen($value, 'UTF-8') > $this->max_length)
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_length', $this->display_name, $this->max_length) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_length_'.$this->name, $this->display_name, $this->max_length);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_length', $this->display_name, $this->max_length) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_length_'.$this->name, $this->display_name, $this->max_length);
 				$this->last_check = false;
 				return false;
 			}
@@ -480,7 +480,7 @@ class CValidatorMeta{
 			foreach ($tmp as $vlv)
 				if (doubleval($vlv) < doubleval($this->min_numeric_value))
 				{
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_value', $this->display_name, $this->min_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_value_'.$this->name, $this->display_name, $this->min_numeric_value);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_value', $this->display_name, $this->min_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_min_value_'.$this->name, $this->display_name, $this->min_numeric_value);
 					$this->last_check = false;
 					return false;
 				}
@@ -492,7 +492,7 @@ class CValidatorMeta{
 			foreach ($tmp as $vlv)
 				if (doubleval($vlv) > doubleval($this->max_numeric_value))
 				{
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_value', $this->display_name, $this->max_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_value_'.$this->name, $this->display_name, $this->max_numeric_value);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_value', $this->display_name, $this->max_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_max_value_'.$this->name, $this->display_name, $this->max_numeric_value);
 					$this->last_check = false;
 					return false;
 				}
@@ -504,7 +504,7 @@ class CValidatorMeta{
 			foreach ($tmp as $vlv)
 				if (!in_array($vlv, $this->enumeration))
 				{
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value', $this->display_name, $this->max_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value_'.$this->name, $this->display_name);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value', $this->display_name, $this->max_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value_'.$this->name, $this->display_name);
 					$this->last_check = false;
 					return false;
 				}
@@ -515,7 +515,7 @@ class CValidatorMeta{
 			foreach ($tmp as $vlv)
 				if (!isset($this->add_info1[$vlv]))
 				{
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value', $this->display_name, $this->max_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value_'.$this->name, $this->display_name);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value', $this->display_name, $this->max_numeric_value) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_enumeration_value_'.$this->name, $this->display_name);
 					$this->last_check = false;
 					return false;
 				}
@@ -527,7 +527,7 @@ class CValidatorMeta{
 			foreach ($tmp as $vlv)
 				if (!preg_match($this->pattern, $vlv))
 				{
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value_'.$this->name, $this->display_name);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value_'.$this->name, $this->display_name);
 					$this->last_check = false;
 					return false;
 				}
@@ -537,7 +537,7 @@ class CValidatorMeta{
 		{
 			if ($app->tv[$this->name.'_file_content'] == '')
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_cannot_read_file_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
@@ -547,7 +547,7 @@ class CValidatorMeta{
 		{
 			if (!in_array($_FILES[$this->name]['type'], $this->add_info1))
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file', $this->display_name, join(', ', $this->add_info1)) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file_'.$this->name, $this->display_name, join(', ', $this->add_info1));
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file', $this->display_name, join(', ', $this->add_info1)) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file_'.$this->name, $this->display_name, join(', ', $this->add_info1));
 				$this->last_check = false;
 				return false;
 			}
@@ -560,7 +560,7 @@ class CValidatorMeta{
 			$image_types = array('image/x-xbitmap', 'image/bmp', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png', 'image/tiff', 'image/x-icon');
 			if (!in_array($_FILES[$this->name]['type'], $image_types))
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file', $this->display_name, join(', ', $image_types)) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file_'.$this->name, $this->display_name, join(', ', $image_types));
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file', $this->display_name, join(', ', $image_types)) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_file_'.$this->name, $this->display_name, join(', ', $image_types));
 				$this->last_check = false;
 				return false;
 			}
@@ -574,7 +574,7 @@ class CValidatorMeta{
 			if (is_null($this->add_info3)) {
 				$rs = $GLOBALS['app']->DataBase->select_sql($this->add_info1, array($this->add_info2 => $value));
 				if ($rs !== false && !$rs->eof()) {
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique_'.$this->name, $this->display_name);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique_'.$this->name, $this->display_name);
 					$this->last_check = false;
 					return false;
 				}
@@ -586,7 +586,7 @@ class CValidatorMeta{
 	            where
 	            ('.$this->add_info2.' = \''.mysql_escape_string($value).'\') and id <> '.$this->add_info3.'');
 				if (($rs !== false)&&(!$rs->eof())) {
-					$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique_'.$this->name, $this->display_name);
+					$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_unique_'.$this->name, $this->display_name);
 					$this->last_check = false;
 					return false;
 				}
@@ -613,7 +613,7 @@ class CValidatorMeta{
 			}
 			if (($rs !== false)&&(!$rs->eof())) {
 				
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_in_table', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_in_table_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_in_table', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_in_table_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
@@ -628,7 +628,7 @@ class CValidatorMeta{
             where
             (id = '.$this->add_info2.' and password = \''.md5($value).'\')');
 			if (($rs !== false)&&($rs->eof())) {
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_old_password_invalid', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_old_password_invalid_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_old_password_invalid', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_old_password_invalid_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
@@ -637,7 +637,7 @@ class CValidatorMeta{
 		if ($this->type == VRT_CALLBACK)
 			if (!call_user_func($this->add_info1, $value))
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_function', $this->display_name, $this->add_info1) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_function_'.$this->name, $this->display_name, $this->add_info1);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_function', $this->display_name, $this->add_info1) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_function_'.$this->name, $this->display_name, $this->add_info1);
 				$this->last_check = false;
 				return false;
 			}
@@ -647,7 +647,7 @@ class CValidatorMeta{
 			require_once(BASE_CLASSES_PATH . 'components/credit_card.php');
 			if (!CCreditCard::is_valid_cc($value))
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_valid_value_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
@@ -721,14 +721,14 @@ class CValidatorMeta{
 
 			if ($year < 1900)
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_year', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_year_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_year', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_year_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
 
 			if ( ($month<1) || ($month>12) )
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
@@ -737,26 +737,26 @@ class CValidatorMeta{
 			if (is_leap_year($year)) $months[2] = 29;
 			if ( ($day<1) || ($day>$months[$month]) )
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_date_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
 
 			if ( ($hour<0) || ($hour>23) )
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
 			if ( ($minute<0) || ($minute>59) )
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
 			if ( ($second<0) || ($second>59) )
 			{
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_invalid_time_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}
@@ -782,7 +782,7 @@ class CValidatorMeta{
 	            ('.$this->add_info2.' = \''.mysql_escape_string($value).'\') AND (id <> '.$this->add_info3.')');
 			}
 			if (($rs == false) || ($rs->eof())) {
-				$errors[] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_in_table', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_in_table_'.$this->name, $this->display_name);
+				$errors[$this->name] = (!$this->unique_error_mess) ? $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_in_table', $this->display_name) : $GLOBALS['app']->Localizer->get_gstring('_validator_message', 'validator_not_in_table_'.$this->name, $this->display_name);
 				$this->last_check = false;
 				return false;
 			}

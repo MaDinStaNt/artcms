@@ -42,6 +42,13 @@ class CApp extends CApplication
             'AjaxVisible' => true,
             'Title' => 'Inputs'
         );
+        $this->Modules['AjaxValidator'] = array(
+			'ClassName' => 'CAjaxValidator',
+            'ClassPath' => CUSTOM_CLASSES_PATH . 'components/ajaxvalidator.php',
+            'Visual'=>'0',
+            'AjaxVisible' => true,
+            'Title' => 'AjaxValidator'
+        );
         
         
    	}
