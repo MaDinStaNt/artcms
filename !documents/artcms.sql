@@ -39,7 +39,7 @@ CREATE TABLE `image` (
   `system_key` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `image_size` table : 
@@ -57,7 +57,7 @@ CREATE TABLE `image_size` (
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`),
   CONSTRAINT `image_size_fk` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `loc_lang` table : 
@@ -86,7 +86,7 @@ CREATE TABLE `loc_string` (
   PRIMARY KEY (`id`),
   KEY `language_id` (`language_id`),
   CONSTRAINT `loc_string_fk` FOREIGN KEY (`language_id`) REFERENCES `loc_lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_path` table : 
@@ -103,7 +103,7 @@ CREATE TABLE `registry_path` (
   PRIMARY KEY (`id`),
   KEY `language_id` (`language_id`),
   CONSTRAINT `registry_path_fk` FOREIGN KEY (`language_id`) REFERENCES `loc_lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_value` table : 
@@ -122,7 +122,7 @@ CREATE TABLE `registry_value` (
   PRIMARY KEY (`id`),
   KEY `path_id` (`path_id`),
   CONSTRAINT `registry_value_fk` FOREIGN KEY (`path_id`) REFERENCES `registry_path` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_meta` table : 
@@ -618,7 +618,9 @@ INSERT INTO `loc_string` (`id`, `language_id`, `name`, `value`) VALUES
   (161,1,'validator_field_status','Status'),
   (163,1,'validator_field_abbreviation','Abbreviation'),
   (165,1,'validator_cannot_read_file','Cannot read file from %1$s field'),
-  (167,1,'items_on_page','Items on Page');
+  (167,1,'items_on_page','Items on Page'),
+  (168,1,'validator_field_ajax_test','Ajax Validation Test'),
+  (169,1,'validator_max_length','Please enter at less %2$d characters in %1$s field.');
 COMMIT;
 
 #
@@ -4319,7 +4321,7 @@ COMMIT;
 #
 
 INSERT INTO `user` (`id`, `user_role_id`, `status`, `email`, `password`, `name`, `company`, `address`, `city`, `state_id`, `zip`, `create_date`, `last_login_date`) VALUES 
-  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2011-12-30 04:07:03');
+  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2012-01-02 21:51:43');
 COMMIT;
 
 #
