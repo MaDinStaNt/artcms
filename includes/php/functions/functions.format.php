@@ -12,8 +12,8 @@ function date_2_rus($date_odbc, $return_format = 0)
     if ($date_arr[1] == "03") $month = "Мар";
     if ($date_arr[1] == "04") $month = "Апр";
     if ($date_arr[1] == "05") $month = "Май";
-    if ($date_arr[1] == "06") $month = "�?юн";
-    if ($date_arr[1] == "07") $month = "�?юл";
+    if ($date_arr[1] == "06") $month = "Июн";
+    if ($date_arr[1] == "07") $month = "Июл";
     if ($date_arr[1] == "08") $month = "Авг";
     if ($date_arr[1] == "09") $month = "Сен";
     if ($date_arr[1] == "10") $month = "Окт";

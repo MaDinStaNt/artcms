@@ -228,4 +228,62 @@ class CInput{
 		}
 	}
 }
+
+class CTemplateVar{
+	
+	protected $value;
+	
+	function CTemplateVar(&$val)
+	{
+		if(is_object($val))
+			system_die('Invalid input $val (string or array)', 'CTemplateVar');
+		
+		if(is_array($val))
+			foreach ($val as $k => $v)
+				$val[$k] = new CTemplateVar($val[$k]);
+				
+		$this->value = $val;
+	}
+	
+	function escape($print = true)
+	{
+		if(!is_bool($print))
+			system_die('Invalid input $print (bool)', 'CTemplateVar -> escape()');
+			
+		if($print === true)
+			echo htmlspecialchars($this->value);
+		else 
+			return htmlspecialchars($this->value);
+	}
+	function js_escape($print = true)
+	{
+		if(!is_bool($print))
+			system_die('Invalid input $print (bool)', 'CTemplateVar -> js_escape()');
+			
+		if($print === true)
+			echo stripcslashes(js_escape_string($this->value));
+		else 
+			return stripcslashes(js_escape_string($this->value));
+	}
+	function html_escape($print = true, $allowable_tags = '<p><strong><b><font><h1><h2><h3><h4><h5><h6>')
+	{
+		if(!is_bool($print))
+			system_die('Invalid input $print (bool)', 'CTemplateVar -> html_escape()');
+		if(!is_string($allowable_tags))
+			system_die('Invalid input $allowable_tags (string)', 'CTemplateVar -> html_escape()');
+			
+		if($print === true)
+			echo strip_tags($this->value, $allowable_tags);
+		else 
+			return strip_tags($this->value, $allowable_tags);
+	}
+	function _print()
+	{
+		echo $this->value;
+	}
+	function get_value()
+	{
+		return $this->value; 
+	}
+}
 ?>

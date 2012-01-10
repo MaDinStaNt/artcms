@@ -59,7 +59,8 @@ function js_escape_string($str)
 	$str = str_replace("\r", "\\r", $str);
 	$str = str_replace("\n", "\\n", $str);
 	$str = str_replace("\n", "\\n", $str);
-	$str = str_replace("</script>", "</'+'script>", $str);
+	$str = str_replace("<script", "&lt;script", $str);
+	$str = str_replace("</script>", "&lt;/'+'script&gt;", $str);
 	return $str;
 }
 
@@ -789,11 +790,10 @@ class CValidatorMeta{
 		}
 				
 		if ($this->last_check)
-			$infos[] = $this->name.' is valid';
+			$infos[$this->name] = $this->name.' is valid';
 		
 			
-		if(preg_match('/<script/ui', $value))
-			$value = js_escape_string(str_replace('<script', '&lt;script', str_replace('</script>', '&lt;/script&gt;', $value)));
+		$value = js_escape_string($value);
 
 		$app->tv[$this->name] = $value;
 		return $this->last_check;

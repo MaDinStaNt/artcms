@@ -176,8 +176,24 @@ class CHTMLPage extends CObject {
 		$this->process_template($this->tv, BASE_TEMPLATE_PATH.$this->h_footer);		
 	}
 	
+	protected function set_arr2tv($arr)
+	{
+		foreach ($arr as $k => $v)
+			if(is_array($v))
+				$this->set_arr2tv($arr[$k]);
+			else 
+				$arr[$k] = new CTemplateVar($v);
+				
+		return $arr;
+	}
+	
 	function process_template($tv, $template){
-		foreach ($tv as $key => $value){ ${$key} = $value; }
+		$tv['arr'] = array('vasya' => 'asd', array('gadya', 'petya'), 'mama');
+		foreach ($tv as $key => $value){ 
+			${$key} = $value; 
+			${"c_$key"} = new CTemplateVar($value);
+		}
+		$tv = false;
 		if(is_array($template))
 			foreach ($template as $temp)
 				if(file_exists($temp)){
