@@ -18,6 +18,8 @@ class CHTMLPage extends CObject {
 	var $PAGE_TITLE;
 	var $PAGE_KEYWORDS;
 	var $PAGE_DESCRIPTION;
+	public $HTTP;
+	public $HTTPS;
 	
 	function CHTMLPage($app, $content = ''){
 		parent::CObject();
@@ -56,8 +58,8 @@ class CHTMLPage extends CObject {
 			$this->tv['IS_SSL'] = false;
 			
 		$this->tv['SITE_NAME'] = $SiteName;
-		$this->tv['HTTP'] = $HttpName.'://'.$SiteUrl.$http_port.$RootPath;
-		$this->tv['HTTPS'] = $SHttpName.'://'.$HTTPSSiteUrl.$shttp_port.$ssl_root;
+		$this->tv['HTTP'] = $this->HTTP = $HttpName.'://'.$SiteUrl.$http_port.$RootPath;
+		$this->tv['HTTPS'] = $this->HTTPS = $SHttpName.'://'.$HTTPSSiteUrl.$shttp_port.$ssl_root;
 		
 		if ($this->IsSecure)
 			if (!$this->Application->User->is_logged())
@@ -67,6 +69,8 @@ class CHTMLPage extends CObject {
 		
 		$this->check_logout_form_submit();
 		$this->Application->User->set_logged_vars($this->tv);
+		if(is_object($this->Application->VKauth))
+			$this->Application->VKauth->set_logged_vars($this->tv);
 			
 		$return_value = true;
 		$r_v = $this->Application->on_page_init(); // global on_page_init event
@@ -163,7 +167,8 @@ class CHTMLPage extends CObject {
 	}
 	
 	function get_content(){
-		$this->process_template($this->tv, CUSTOM_TEMPLATE_PATH.$this->template);
+		if(strlen($this->template) > 0)
+			$this->process_template($this->tv, CUSTOM_TEMPLATE_PATH.$this->template);
 	}
 	
 	function draw_header(){
@@ -176,23 +181,8 @@ class CHTMLPage extends CObject {
 		$this->process_template($this->tv, BASE_TEMPLATE_PATH.$this->h_footer);		
 	}
 	
-	protected function set_arr2tv($arr)
-	{
-		foreach ($arr as $k => $v)
-			if(is_array($v))
-				$this->set_arr2tv($arr[$k]);
-			else 
-				$arr[$k] = new CTemplateVar($v);
-				
-		return $arr;
-	}
-	
 	function process_template($tv, $template){
-		$tv['arr'] = array('vasya' => 'asd', array('gadya', 'petya'), 'mama');
-		foreach ($tv as $key => $value){ 
-			${$key} = $value; 
-			${"c_$key"} = new CTemplateVar($value);
-		}
+		foreach ($tv as $key => $value){${$key} = $value;}
 		$tv = false;
 		if(is_array($template))
 			foreach ($template as $temp)

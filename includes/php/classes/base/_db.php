@@ -317,7 +317,7 @@ class CBaseDB
 	 * @return integer/boolean
 	 * @access public
 	 */
-	function insert_sql($table_name, $values)
+	function insert_sql($table_name, $values, $have_id = true)
 	{
 		$sql = 'insert into ' . ((isset($this->DB_PREFIX))?$this->DB_PREFIX:DB_PREFIX) . $table_name . ' (';
 		$c = '';
@@ -342,7 +342,9 @@ class CBaseDB
 		}
 		$sql .= ')';
 		if (!$this->internalQuery($sql)) return false;
-		return $this->get_last_id();
+		elseif($have_id)
+			return $this->get_last_id();
+		return true;
 	}
 
 	/**

@@ -86,7 +86,7 @@ CREATE TABLE `loc_string` (
   PRIMARY KEY (`id`),
   KEY `language_id` (`language_id`),
   CONSTRAINT `loc_string_fk` FOREIGN KEY (`language_id`) REFERENCES `loc_lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8;
 
 #
 # Structure for the `registry_path` table : 
@@ -194,6 +194,28 @@ CREATE TABLE `user_role` (
   `title` varchar(60) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Structure for the `vk_user` table : 
+#
+
+DROP TABLE IF EXISTS `vk_user`;
+
+CREATE TABLE `vk_user` (
+  `id` int(11) NOT NULL,
+  `user_role_id` int(11) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `nickname` varchar(255) DEFAULT NULL,
+  `screen_name` varchar(255) NOT NULL,
+  `sex` tinyint(1) NOT NULL DEFAULT '1',
+  `photo_filename` varchar(255) DEFAULT NULL,
+  `access_token` varchar(255) DEFAULT NULL,
+  `expires_in` int(11) DEFAULT NULL,
+  `last_login_date` datetime DEFAULT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY `uid` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -620,7 +642,12 @@ INSERT INTO `loc_string` (`id`, `language_id`, `name`, `value`) VALUES
   (165,1,'validator_cannot_read_file','Cannot read file from %1$s field'),
   (167,1,'items_on_page','Items on Page'),
   (168,1,'validator_field_ajax_test','Ajax Validation Test'),
-  (169,1,'validator_max_length','Please enter at less %2$d characters in %1$s field.');
+  (169,1,'validator_max_length','Please enter at less %2$d characters in %1$s field.'),
+  (170,1,'next_page','next_page'),
+  (171,1,'last_page','last_page'),
+  (172,1,'vklogin_success','vklogin_success'),
+  (173,1,'your_avatar','your_avatar'),
+  (174,1,'logout_success','logout_success');
 COMMIT;
 
 #
@@ -4321,7 +4348,7 @@ COMMIT;
 #
 
 INSERT INTO `user` (`id`, `user_role_id`, `status`, `email`, `password`, `name`, `company`, `address`, `city`, `state_id`, `zip`, `create_date`, `last_login_date`) VALUES 
-  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2012-01-02 21:51:43');
+  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2012-01-15 22:31:21');
 COMMIT;
 
 #
@@ -4333,6 +4360,14 @@ INSERT INTO `user_role` (`id`, `title`, `description`) VALUES
   (10,'User','User Account'),
   (100,'Administrator','Administrator Account'),
   (255,'Global Administrator','Global Administrator Account');
+COMMIT;
+
+#
+# Data for the `vk_user` table  (LIMIT 0,500)
+#
+
+INSERT INTO `vk_user` (`id`, `user_role_id`, `last_name`, `first_name`, `nickname`, `screen_name`, `sex`, `photo_filename`, `access_token`, `expires_in`, `last_login_date`, `create_date`) VALUES 
+  (50006762,10,'Турчин','Артур','MaDinStaNt','madinstant',2,'a_fe744d97.jpg','2e96fe03637988fd2c6df4e9f22c47e54f22c6d2c6df4eb3cc8704aca50ba7a',1326742550,'2012-01-15 22:35:51','2012-01-15 21:54:50');
 COMMIT;
 
 

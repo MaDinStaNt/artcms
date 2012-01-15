@@ -181,6 +181,60 @@ function save_file_to_folder($post_var_name, $folder, $save_original_name = true
 	else
 		return false;
 }
+function save_file_to_folder_from_url($url, $folder, $save_original_name = true, $full_folder = true)
+{
+	if (!$full_folder) {
+		$p = $GLOBALS['FilePath'];
+		if ( (substr($folder, -1) != '/') && (substr($folder, -1) != '\\') )
+			$folder .= '/';
+		$folder = str_replace('\\', '/', $folder);
+		$a = explode('/', $folder);
+		if (!is_dir($p)) {
+			@mkdir($p, 0777);
+			@chmod($p, 0777);
+		}
+		foreach ($a as $v)
+			if (strlen($v)) {
+				$p .= ($v .'/');
+				if (!@is_dir($p)) {
+					@mkdir($p, 0777);
+					@chmod($p, 0777);
+				}
+			}
+	
+		$folder = $GLOBALS['FilePath'] . $folder;
+	}
+	
+	if ($save_original_name)
+	{
+		$file_name = substr(strtolower(strrchr($url, '/')), 1);
+	}
+	else 
+	{
+		$mark = microtime();
+		$mark = substr($mark,11,11).substr($mark,2,6);
+		$ext = strrchr($url, '.');
+		$file_name = strtolower($mark.(($ext===false)?'':$ext));
+	}
+	if(!$img_s = file_get_contents($url))
+		return false;
+		
+	$res = file_put_contents($folder.$file_name, $img_s); //for local machine
+	
+	/*$ch = curl_init($url); delete comment on server
+	$res = $fp = fopen($folder.$file_name, 'wb');
+	curl_setopt($ch, CURLOPT_FILE, $fp);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_exec($ch);
+	curl_close($ch);
+	fclose($fp);*/
+	//print_arr($folder.$file_name, $res);
+	
+	if($res)
+		return $file_name;
+	else 
+		return false;
+}
 function compare($str1, $str2){
 	if ( strcasecmp($str1, $str2)===0) return true; else return false;
 }
@@ -245,6 +299,14 @@ function array_search_assoc($array, $search_arr)
 	        	return $key;
         	
     return false;
+}
+
+function parse_json($json, $return_array = true)
+{
+	if($json === false || is_null($json) || strlen($json) == 0) return false;
+	$res = json_decode($json, $return_array);
+	return (((is_array($res) && !empty($res)) || (is_object($res))) ? $res : false);
+		
 }
 
 

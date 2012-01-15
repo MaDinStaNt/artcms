@@ -33,7 +33,9 @@ class CUser
             if (!is_numeric($this->UserData['id']))
                 $this->UserData['id'] = -1;
         }
-        $this->synchronize();
+        
+        if(!isset($this->UserData['access_token']) || !$this->UserData['is_vk'])
+       		$this->synchronize();
     }
 
     public function get_last_error()
@@ -161,12 +163,12 @@ class CUser
         }
     }
 
-    public function is_logged($id_level=null)
+    public function is_logged($role_id = null)
     {
-        if (is_null($id_level))
-            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) );
+        if (is_null($role_id))
+            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) && (!isset($this->UserData['is_vk']) || $this->UserData['is_vk'] === false));
         else
-            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0)  && $this->UserData['id_level'] == $id_level);
+            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) && (!isset($this->UserData['is_vk']) || $this->UserData['is_vk'] === false) && $this->UserData['user_role_id'] == $role_id);
     }
 
     public function login($l, $p, $store = true)

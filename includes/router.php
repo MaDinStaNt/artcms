@@ -4,6 +4,7 @@ $router = $app->get_module('Router');
 $router->add_route('/', 'CIndexPage', 'CIndexPage.php', 'indexpage.tpl');
 $router->add_route('/index.html', 'CIndexPage', 'CIndexPage.php', 'indexpage.tpl');
 
+$router->add_route('/vk-auth', 'CVKapiAuthPage', 'CVKapiAuthPage.php');
 $router->add_route('/page-not-found.html', 'CNotFoundPage', 'CNotFoundPage.php', 'page_not_found.tpl');
 
 $page = $router->get_current_page();

@@ -20,6 +20,9 @@ class CAdminPage extends CHTMLPage
 				$this->Application->User->logout();
 			}
 		}
+		elseif (isset($this->Application->User->UserData['user_role_id']) && $this->Application->User->UserData['user_role_id'] < USER_LEVEL_GLOBAL_ADMIN){
+			$this->Application->User->logout();
+		}
 
 		$this->PAGE_TITLE = $SiteName;
 	}

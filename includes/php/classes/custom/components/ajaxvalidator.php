@@ -39,9 +39,7 @@ class CAjaxValidator
 					else {
 						$errors = CValidator::get_errors();
 						$out = array();
-						foreach ($errors as $field => $message) {
-							return array('field' => $field, 'message' => $message);
-						}
+						return array('field' => $field_name, 'message' => $errors[$field_name]);
 					}
 				}
 			}

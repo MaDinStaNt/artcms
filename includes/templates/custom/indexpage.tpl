@@ -7,16 +7,22 @@ Hello, Developer! Welcome to develop at "Art-cms".
 	<? CTemplate::input('text', 'ajax_test', 'ajax_test'); ?>
 	<div id="ajax_test_validator_message">&nbsp;</div>
 	
-	<? echo stripcslashes(js_escape_string(('
-		\\\
-		<div><strong>hu</strong>i</div><br />
-		<script type="text/javascript">
-			alert(1);
-		</script>
-	'))); ?>
-	<? print_arr($c_arr->get_value()); ?>
-	<? foreach ($c_arr->get_value() as $val): ?>
-		<div><? $val->escape(); ?></div>
-	<? endforeach; ?>
+	<? escape($test_var); ?>
+	<div>
+		<? if($is_logged): ?>
+			<? if($is_VKlogged): ?>
+				
+				<p>VK login success!!!</p>
+				<p>hello, <?=$logged_user_first_name; ?> <?=$logged_user_nickname; ?> <?=$logged_user_last_name; ?></p>
+				<p>Your avatar: <img src="<?=$HTTP;?>pub/VKusers/<?=$logged_user_id;?>/<?=$logged_user_photo_filename;?>" title="<? CTemplate::loc_string('your_avatar'); ?>" /></p>
+			<? else: ?>
+				<p>You are logged manually (admin panel)</p>
+			<? endif;?>
+			<p><a href="javascript:document.forms.logout_form.submit();">logout</a></p>
+		<? else: ?>
+			<a href="<?=$HTTP;?>vk-auth">VK login</a>
+		<? endif; ?>
+	</div>
 	
 <? CForm::end(); ?>
+<? CForm::begin('logout_form'); ?><? CForm::end(); ?>

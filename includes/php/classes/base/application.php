@@ -16,6 +16,7 @@ require_once('validator.php');
 require_once('router.php');
 require_once('session.php');
 require_once('utils.php');
+require_once('components/vkapi.php');
 /**
  * Main class for the site, extend CApp from it<br>
  * properties:<br>
@@ -56,10 +57,13 @@ class CApplication {
                 $this->User = new CUser($this);
                 $this->Localizer = new CLocalizer($this);
                 $this->Router = new CRouter($this);
+                $this->VKauth = new VKauth($this);
+                $this->VKapi = new VKapi($this);
                 //$this->Session = new CSession($this);
                 $this->Modules['DataBase'] = &$this->DataBase;
                 $this->Modules['User'] = &$this->User;
                 $this->Modules['Router'] = &$this->Router;
+                $this->Modules['VKapi'] = &$this->VKapi;
                 //$this->Modules['Session'] = &$this->Session;
                 $this->Modules['Localizer'] = &$this->Localizer;
                 $this->Modules['Registry'] = array('ClassName' => 'CRegistry', 'ClassPath' => BASE_CLASSES_PATH . 'registry.php', 'Title'=>'Settings');
