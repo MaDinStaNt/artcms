@@ -10,17 +10,18 @@ Hello, Developer! Welcome to develop at "Art-cms".
 	<? escape($test_var); ?>
 	<div>
 		<? if($is_logged): ?>
-			<? if($is_VKlogged): ?>
+			<? if($is_VKlogged || $is_FBlogged): ?>
 				
-				<p>VK login success!!!</p>
+				<p><? if($is_VKlogged): ?>VK<? else: ?>FB <? endif; ?> login success!!!</p>
 				<p>hello, <?=$logged_user_first_name; ?> <?=$logged_user_nickname; ?> <?=$logged_user_last_name; ?></p>
-				<p>Your avatar: <img src="<?=$HTTP;?>pub/VKusers/<?=$logged_user_id;?>/<?=$logged_user_photo_filename;?>" title="<? CTemplate::loc_string('your_avatar'); ?>" /></p>
+				<p>Your avatar: <img src="<?=$HTTP;?>pub/<? if($is_VKlogged): ?>VKusers<? else: ?>FBusers<? endif; ?>/<?=$logged_user_id;?>/<?=$logged_user_photo_filename;?>" title="<? CTemplate::loc_string('your_avatar'); ?>" /></p>
 			<? else: ?>
 				<p>You are logged manually (admin panel)</p>
 			<? endif;?>
 			<p><a href="javascript:document.forms.logout_form.submit();">logout</a></p>
 		<? else: ?>
 			<a href="<?=$HTTP;?>vk-auth">VK login</a>
+			<a href="<?=$HTTP;?>fb-auth">FB login</a>
 		<? endif; ?>
 	</div>
 	

@@ -17,6 +17,7 @@ require_once('router.php');
 require_once('session.php');
 require_once('utils.php');
 require_once('components/vkapi.php');
+require_once('components/fbapi.php');
 /**
  * Main class for the site, extend CApp from it<br>
  * properties:<br>
@@ -59,6 +60,8 @@ class CApplication {
                 $this->Router = new CRouter($this);
                 $this->VKauth = new VKauth($this);
                 $this->VKapi = new VKapi($this);
+                $this->FBauth = new FBauth($this);
+                $this->FBapi = new FBapi($this);
                 //$this->Session = new CSession($this);
                 $this->Modules['DataBase'] = &$this->DataBase;
                 $this->Modules['User'] = &$this->User;

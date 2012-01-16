@@ -92,10 +92,13 @@ class VKauth
 			return true;
 		else 
 		{
+			if(is_object($this->FBauth) && $this->FBauth->is_logged())
+				return true;
+			
 			if (!array_key_exists('UserData', $_SESSION)) $_SESSION['UserData'] = array();
 				$this->UserData = &$_SESSION['UserData'];
 			
-			if($this->UserData['is_vk'] === true && isset($this->UserData['access_token']))	
+			if($this->UserData['is_vk'] === true)	
 				$this->synchronize();
 		}
 	}
@@ -126,6 +129,8 @@ class VKauth
             	{
 			    	row_to_vars($rs, $this->UserData);
 			    	$this->UserData['is_vk'] = true; 
+			    	$this->access_token = $this->UserData['access_token'];
+			    	$this->expires_in = $this->UserData['expires_in'];
             	}
             	else 
             	{

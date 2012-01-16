@@ -34,7 +34,7 @@ class CUser
                 $this->UserData['id'] = -1;
         }
         
-        if(!isset($this->UserData['access_token']) || !$this->UserData['is_vk'])
+        if(!$this->UserData['is_vk'] && !$this->UserData['is_fb'])
        		$this->synchronize();
     }
 
@@ -166,9 +166,9 @@ class CUser
     public function is_logged($role_id = null)
     {
         if (is_null($role_id))
-            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) && (!isset($this->UserData['is_vk']) || $this->UserData['is_vk'] === false));
+            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) && (!isset($this->UserData['is_vk']) || $this->UserData['is_vk'] === false) && (!isset($this->UserData['is_fb']) || $this->UserData['is_fb'] === false));
         else
-            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) && (!isset($this->UserData['is_vk']) || $this->UserData['is_vk'] === false) && $this->UserData['user_role_id'] == $role_id);
+            return ( (isset($this->UserData['id'])) && ($this->UserData['id'] > 0) && (!isset($this->UserData['is_vk']) || $this->UserData['is_vk'] === false) && (!isset($this->UserData['is_fb']) || $this->UserData['is_fb'] === false) && $this->UserData['user_role_id'] == $role_id);
     }
 
     public function login($l, $p, $store = true)

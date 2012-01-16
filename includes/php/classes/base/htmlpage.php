@@ -71,6 +71,8 @@ class CHTMLPage extends CObject {
 		$this->Application->User->set_logged_vars($this->tv);
 		if(is_object($this->Application->VKauth))
 			$this->Application->VKauth->set_logged_vars($this->tv);
+		if(is_object($this->Application->FBauth))
+			$this->Application->FBauth->set_logged_vars($this->tv);
 			
 		$return_value = true;
 		$r_v = $this->Application->on_page_init(); // global on_page_init event

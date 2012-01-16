@@ -12,6 +12,13 @@ class CIndexPage extends CFrontPage {
 	function on_page_init(){
 		parent::on_page_init();
 		//unset($_SESSION['UserData']);
+		/*$ch = curl_init('http://xpgraph.com/i/xpgraph.png');
+		$res = $fp = fopen(ROOT.'pub/xpgraph.png', 'wb');
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);*/
 	}
 	
 	function parse_data(){
