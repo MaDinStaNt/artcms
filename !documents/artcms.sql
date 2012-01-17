@@ -28,6 +28,28 @@ CREATE TABLE `country` (
 ) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=utf8;
 
 #
+# Structure for the `fb_user` table : 
+#
+
+DROP TABLE IF EXISTS `fb_user`;
+
+CREATE TABLE `fb_user` (
+  `id` bigint(20) NOT NULL,
+  `user_role_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `photo_filename` varchar(255) DEFAULT NULL,
+  `link` varchar(255) NOT NULL,
+  `gender` enum('female','male') NOT NULL DEFAULT 'female',
+  `access_token` varchar(255) DEFAULT NULL,
+  `expires_in` int(11) DEFAULT NULL,
+  `last_login_date` datetime DEFAULT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
 # Structure for the `image` table : 
 #
 
@@ -203,7 +225,7 @@ CREATE TABLE `user_role` (
 DROP TABLE IF EXISTS `vk_user`;
 
 CREATE TABLE `vk_user` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `user_role_id` int(11) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
@@ -472,6 +494,15 @@ INSERT INTO `country` (`id`, `title`, `abbreviation`, `phone_code`, `tmp`) VALUE
   (254,'China (Hong Kong S.A.R.)','HK',NULL,1),
   (255,'China (Macau S.A.R.)','MO',NULL,1),
   (258,'Palestinian National Authority','PS',NULL,1);
+COMMIT;
+
+#
+# Data for the `fb_user` table  (LIMIT 0,500)
+#
+
+INSERT INTO `fb_user` (`id`, `user_role_id`, `name`, `last_name`, `first_name`, `photo_filename`, `link`, `gender`, `access_token`, `expires_in`, `last_login_date`, `create_date`) VALUES 
+  (100001864353810,10,'Artur Turchin','Turchin','Artur','100001864353810.png','http://www.facebook.com/profile.php?id=100001864353810','male','AAADBO9asJJsBAIn15G3uT7A76q6x8LO4w8DpkbaWQ67q5ArwEK6Uk8qZA6ZCJAyW325s9UNbfgC51QDktgrYCkrwiPdNPZBJAiOk2ZAyePfjh2bULmKO',1326843992,'2012-01-17 02:46:32','2012-01-17 01:39:58'),
+  (100002683200891,10,'Artur  Turchin','Turchin','Artur','100002683200891.png','http://www.facebook.com/profile.php?id=100002683200891','male','AAADBO9asJJsBABPVYgzVGdzSkHUHeHsJro4HTnHMqZCQLZBZBvLd1fKIch0ZAFm8MlElvfOWDWVqHDlt7LlS2e7iAikShPUpZAIZBQpwWi4x6ZBItoeqC9J',1326843886,'2012-01-17 02:44:46','2012-01-17 02:44:48');
 COMMIT;
 
 #
@@ -4348,7 +4379,7 @@ COMMIT;
 #
 
 INSERT INTO `user` (`id`, `user_role_id`, `status`, `email`, `password`, `name`, `company`, `address`, `city`, `state_id`, `zip`, `create_date`, `last_login_date`) VALUES 
-  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2012-01-15 22:31:21');
+  (2,255,1,'admin@admin.com','21232f297a57a5a743894a0e4a801fc3','MaDinStaNt','XPGraph',NULL,NULL,NULL,NULL,'2011-08-14 18:12:50','2012-01-15 23:19:52');
 COMMIT;
 
 #
@@ -4367,7 +4398,7 @@ COMMIT;
 #
 
 INSERT INTO `vk_user` (`id`, `user_role_id`, `last_name`, `first_name`, `nickname`, `screen_name`, `sex`, `photo_filename`, `access_token`, `expires_in`, `last_login_date`, `create_date`) VALUES 
-  (50006762,10,'Турчин','Артур','MaDinStaNt','madinstant',2,'a_fe744d97.jpg','2e96fe03637988fd2c6df4e9f22c47e54f22c6d2c6df4eb3cc8704aca50ba7a',1326742550,'2012-01-15 22:35:51','2012-01-15 21:54:50');
+  (50006762,10,'Турчин','Артур','MaDinStaNt','madinstant',2,'a_fe744d97.jpg','bc10abe8f1fda617beeba102fcbec1b0a4bbeebbeeba100a924221f41d89048',1326843670,'2012-01-17 02:41:11','2012-01-15 21:54:50');
 COMMIT;
 
 
